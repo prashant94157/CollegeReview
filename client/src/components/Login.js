@@ -1,7 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const { email, password } = formData;
+
+  const onChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    // login(email, password);
+    console.log(email, password);
+  };
+
   return (
     <div className='flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8'>
       <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
@@ -11,7 +31,7 @@ const Login = () => {
       </div>
 
       <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
-        <form className='space-y-6' action='#' method='POST'>
+        <form className='space-y-6' onSubmit={onSubmit} method='POST'>
           <div>
             <label
               htmlFor='email'
@@ -24,6 +44,8 @@ const Login = () => {
                 id='email'
                 name='email'
                 type='email'
+                value={email}
+                onChange={onChange}
                 autoComplete='email'
                 required
                 className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
@@ -51,6 +73,8 @@ const Login = () => {
                 name='password'
                 type='password'
                 autoComplete='current-password'
+                value={password}
+                onChange={onChange}
                 required
                 className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
               />

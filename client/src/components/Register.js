@@ -1,7 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Register = () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const { email, password, confirmPassword } = formData;
+
+  const onChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    // login(email, password);
+    console.log(email, password, confirmPassword);
+  };
+
   return (
     <div className='flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8'>
       <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
@@ -11,7 +29,7 @@ const Register = () => {
       </div>
 
       <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
-        <form className='space-y-6' action='#' method='POST'>
+        <form className='space-y-6' onSubmit={onSubmit} method='POST'>
           <div>
             <label
               htmlFor='email'
@@ -24,6 +42,8 @@ const Register = () => {
                 id='email'
                 name='email'
                 type='email'
+                value={email}
+                onChange={onChange}
                 autoComplete='email'
                 required
                 className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
@@ -45,6 +65,8 @@ const Register = () => {
                 id='password'
                 name='password'
                 type='password'
+                value={password}
+                onChange={onChange}
                 autoComplete='current-password'
                 required
                 className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
@@ -66,6 +88,8 @@ const Register = () => {
                 id='password'
                 name='confirmPassword'
                 type='password'
+                value={confirmPassword}
+                onChange={onChange}
                 autoComplete='current-password'
                 required
                 className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
