@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-function Register() {
+const Register = () => {
   return (
     <div className='flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8'>
       <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
@@ -38,11 +39,6 @@ function Register() {
               >
                 Password
               </label>
-              {/* <div className='text-sm'>
-                      <a href='/' className='font-semibold'>
-                        Forgot password?
-                      </a>
-                    </div> */}
             </div>
             <div className='mt-2'>
               <input
@@ -64,11 +60,6 @@ function Register() {
               >
                 Confirm Password
               </label>
-              {/* <div className='text-sm'>
-                      <a href='/' className='font-semibold'>
-                        Forgot password?
-                      </a>
-                    </div> */}
             </div>
             <div className='mt-2'>
               <input
@@ -93,16 +84,16 @@ function Register() {
 
         <p className='mt-10 text-sm text-center'>
           Already have an account?
-          <a
-            href='/'
+          <Link
+            to='/'
             className='font-semibold pl-2 hover:text-[#fff000] px-3 leading-6'
           >
             LOGIN
-          </a>
+          </Link>
         </p>
       </div>
     </div>
   );
-}
+};
 
 export default Register;

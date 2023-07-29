@@ -4,6 +4,9 @@ import { motion } from 'framer-motion';
 import './App.css';
 import Footer from './components/Footer';
 import Homescreen from './screens/Homescreen';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './components/Login';
+import Register from './components/Register';
 
 function App() {
   const [mousePosition, setMousePosition] = useState({
@@ -34,21 +37,29 @@ function App() {
   };
 
   return (
-    <div className='bg-[#181829] text-white font-sans'>
-      <motion.div
-        className='cursor'
-        variants={variants}
-        animate='default'
-        transition={{ duration: 1 }}
-      />
-      <div className='relative z-20 w-full'>
-        <Header />
-        <div className='min-h-[253px]'>
-          <Homescreen />
+    <Router>
+      <div className='bg-[#181829] text-white font-sans'>
+        <motion.div
+          className='cursor'
+          variants={variants}
+          animate='default'
+          transition={{ duration: 1 }}
+        />
+        <div className='relative z-20 w-full'>
+          <Header />
+          <div className='min-h-[253px]'>
+            <Routes>
+              <Route path='/' element={<Homescreen component={Login} />} />
+              <Route
+                path='/register'
+                element={<Homescreen component={Register} />}
+              />
+            </Routes>
+          </div>
+          <Footer />
         </div>
-        <Footer />
       </div>
-    </div>
+    </Router>
   );
 }
 

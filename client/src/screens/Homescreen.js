@@ -1,8 +1,6 @@
 import React from 'react';
-import Register from '../components/Register';
-import Login from '../components/Login';
 
-export default function Homescreen() {
+const Homescreen = ({ component: Component }) => {
   return (
     <div className=''>
       <div className='pt-10 text-6xl font-bold text-center'>College Review</div>
@@ -22,10 +20,11 @@ export default function Homescreen() {
           eaque consequuntur magnam est doloribus dolorem!
         </div>
         <div className='w-1/2'>
-          {/* <Register /> */}
-          <Login />
+          <Component />
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Homescreen;

@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-function Login() {
+const Login = () => {
   return (
     <div className='flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8'>
       <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
@@ -68,16 +69,16 @@ function Login() {
 
         <p className='mt-10 text-sm text-center'>
           Don't have an account?
-          <a
-            href='/'
+          <Link
+            to='/register'
             className='font-semibold pl-2 hover:text-[#fff000] px-3 leading-6'
           >
-            Sign up
-          </a>
+            Register
+          </Link>
         </p>
       </div>
     </div>
   );
-}
+};
 
 export default Login;
