@@ -9,7 +9,6 @@ class Spinner extends React.Component {
     super(props);
     this.player = React.createRef(); // initialize your ref
     this.value = Math.floor(Math.random() * 3) + 1;
-    console.log(this.value);
   }
 
   render() {

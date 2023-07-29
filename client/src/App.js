@@ -10,7 +10,6 @@ import Register from './components/Register';
 import { Provider } from 'react-redux';
 import store from './store';
 import Alert from './components/Alert';
-import Spinner from './components/Spinner';
 
 function App() {
   const [mousePosition, setMousePosition] = useState({
@@ -52,9 +51,8 @@ function App() {
           />
           <div className='relative z-20 w-full'>
             <Header />
-            <Alert />
             <div className='min-h-[253px]'>
-              {/* <Spinner /> */}
+              <Alert />
               <Routes>
                 <Route path='/' element={<Homescreen component={Login} />} />
                 <Route
