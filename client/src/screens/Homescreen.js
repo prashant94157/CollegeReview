@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const HomeScreen = () => {
-  const navigate = useNavigate();
-
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  useState(() => {
-    if (userInfo) {
-      navigate('/dashboard');
-    }
-  }, [userInfo, navigate]);
+
+  if (userInfo) {
+    return <Navigate to='/dashboard' />;
+  }
 
   return (
     <div className='h-screen pt-24'>
