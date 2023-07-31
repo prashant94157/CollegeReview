@@ -3,15 +3,17 @@ import { Link } from 'react-router-dom';
 import { setAlert } from '../actions/alert_action';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { register } from '../actions/auth_action';
 
-const Register = ({ setAlert }) => {
+const Register = ({ setAlert, register }) => {
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
 
-  const { email, password, confirmPassword } = formData;
+  const { name, email, password, confirmPassword } = formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,9 +21,11 @@ const Register = ({ setAlert }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // login(email, password);
-    console.log(email, password, confirmPassword);
-    setAlert('Passwords do not match', 'red', 300000);
+    if (password !== confirmPassword) {
+      setAlert('Passwords do not match', 'red');
+    } else {
+      register({ name, email, password });
+    }
   };
 
   return (
@@ -34,6 +38,27 @@ const Register = ({ setAlert }) => {
 
       <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
         <form className='space-y-6' onSubmit={onSubmit} method='POST'>
+          <div>
+            <label
+              htmlFor='name'
+              className='block text-sm font-medium leading-6'
+            >
+              Name
+            </label>
+            <div className='mt-2'>
+              <input
+                id='name'
+                name='name'
+                type='text'
+                value={name}
+                onChange={onChange}
+                autoComplete='name'
+                required
+                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+              />
+            </div>
+          </div>
+
           <div>
             <label
               htmlFor='email'
@@ -124,8 +149,9 @@ const Register = ({ setAlert }) => {
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({});
 
-export default connect(mapStateToProps, { setAlert })(Register);
+export default connect(mapStateToProps, { setAlert, register })(Register);

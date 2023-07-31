@@ -1,28 +1,21 @@
-import { applyMiddleware, createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import {
+  legacy_createStore as createStore,
+  combineReducers,
+  applyMiddleware,
+} from 'redux';
 import thunk from 'redux-thunk';
-import rootReducer from './reducers';
-import setAuthToken from './utils/setAuthToken';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
+const reducer = combineReducers({});
 
 const initialState = {};
 
-const middleware = [thunk];
+const middlewares = [thunk];
 
 const store = createStore(
-  rootReducer,
+  reducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
+  composeWithDevTools(applyMiddleware(...middlewares))
 );
-let currentState = store.getState();
-
-// store.subscribe(() => {
-//   let previousState = currentState;
-//   currentState = store.getState();
-
-//   if (previousState.auth.token !== currentState.auth.token) {
-//     const token = currentState.auth.token;
-//     setAuthToken(token);
-//   }
-// });
 
 export default store;

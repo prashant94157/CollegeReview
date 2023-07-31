@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
+import bcryptjs from 'bcryptjs';
 
 const userSchema = mongoose.Schema(
   {
@@ -19,16 +19,16 @@ const userSchema = mongoose.Schema(
     userType: {
       type: String,
       required: true,
-      default: 'user',
+      default: 'user', // 'admin' , 'reviewer'
     },
-    subscriptionWillEndAt: {
-      type: time,
-    },
+    // subscriptionWillEndAt: {
+    //   type: time,
+    // },
   },
-  { timestamps: time }
+  { timestamps: true }
 );
 
-userSchema.pre('save', async (next) => {
+userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     next();
   }
@@ -37,8 +37,8 @@ userSchema.pre('save', async (next) => {
   next();
 });
 
-userSchema.methods.matchPassword = async (enteredPassword) => {
-  return await bcrypt.compare(enteredPassword, this.password);
+userSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcryptjs.compare(enteredPassword, this.password);
 };
 
 const User = mongoose.model('User', userSchema);

@@ -10,6 +10,7 @@ import Register from './components/Register';
 import { Provider } from 'react-redux';
 import store from './store';
 import Alert from './components/Alert';
+import NotFound from './screens/NotFound';
 
 function App() {
   const [mousePosition, setMousePosition] = useState({
@@ -59,6 +60,7 @@ function App() {
                   path='/register'
                   element={<Homescreen component={Register} />}
                 />
+                <Route path='/*' element={<NotFound />} />
               </Routes>
             </div>
             <Footer />
