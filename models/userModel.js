@@ -21,9 +21,6 @@ const userSchema = mongoose.Schema(
       required: true,
       default: 'user', // 'admin' , 'reviewer'
     },
-    // subscriptionWillEndAt: {
-    //   type: time,
-    // },
   },
   { timestamps: true }
 );

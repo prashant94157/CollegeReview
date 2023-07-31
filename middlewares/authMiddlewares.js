@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
 
-import User from '../models/User.js';
+import User from '../models/userModel.js';
 
 const protect = asyncHandler(async (req, res, next) => {
   let token;
@@ -45,8 +45,7 @@ const admin = (req, res, next) => {
 const reviewer = (req, res, next) => {
   if (
     req.user &&
-    req.user.userType === 'admin' &&
-    req.user.userType === 'reviewer'
+    (req.user.userType === 'admin' || req.user.userType === 'reviewer')
   ) {
     next();
   } else {

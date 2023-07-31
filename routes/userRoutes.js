@@ -11,18 +11,19 @@ import {
   updateUser,
   getUserById,
 } from '../controllers/userControllers.js';
-import { protect, admin } from '../middlewares/authMiddlewares.js';
+import { protect, admin, reviewer } from '../middlewares/authMiddlewares.js';
 
 router.post('/login', authUser);
+router.post('/register', registerUser);
 router
   .route('/profile')
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
-router.route('/').post(registerUser).get(protect, admin, getUsers);
+router.get('/', protect, reviewer, getUsers);
 router
   .route('/:id')
   .delete(protect, admin, deleteUser)
-  .get(protect, admin, getUserById)
+  .get(protect, reviewer, getUserById)
   .put(protect, admin, updateUser);
 
 export default router;
