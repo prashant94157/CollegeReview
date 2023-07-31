@@ -32,7 +32,6 @@ const Login = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (userInfo) {
-      // console.log(redirect);
       navigate(`../${redirect}`);
     }
   }, [userInfo, navigate, redirect]);

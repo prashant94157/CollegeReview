@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Spinner from '../components/Spinner';
 
-const Homescreen = () => {
+const HomeScreen = () => {
   const navigate = useNavigate();
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { loading, userInfo } = userLogin;
+  const { userInfo } = userLogin;
   useState(() => {
     if (userInfo) {
       navigate('/dashboard');
     }
   }, [userInfo, navigate]);
 
-  return loading ? (
-    <Spinner />
-  ) : (
+  return (
     <div className='h-screen pt-24'>
       <div className='pt-20 text-6xl font-bold text-center'>College Review</div>
       <div className='flex flex-col items-center justify-center'>
@@ -53,4 +50,4 @@ const Homescreen = () => {
   );
 };
 
-export default Homescreen;
+export default HomeScreen;

@@ -8,6 +8,8 @@ import { register } from '../actions/userActions';
 import Alert from '../components/Alert';
 
 const Register = () => {
+  const userLogin = useSelector((state) => state.userLogin);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -32,10 +34,10 @@ const Register = () => {
 
   const navigate = useNavigate();
   useEffect(() => {
-    if (userInfo) {
+    if (userLogin.userInfo) {
       navigate(redirect);
     }
-  }, [userInfo, navigate, redirect]);
+  }, [userLogin.userInfo, navigate, redirect]);
 
   const onSubmit = (e) => {
     e.preventDefault();

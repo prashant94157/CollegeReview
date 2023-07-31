@@ -3,12 +3,12 @@ import Header from './components/Header';
 import { motion } from 'framer-motion';
 import './App.css';
 import Footer from './components/Footer';
-import Homescreen from './screens/Homescreen';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NotFoundScreen from './screens/NotFoundScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import LoginScreen from './screens/LoginScreen';
 import DashboardScreen from './screens/DashboardScreen';
+import HomeScreen from './screens/HomeScreen';
 
 const App = () => {
   const [mousePosition, setMousePosition] = useState({
@@ -54,7 +54,7 @@ const App = () => {
               <Route path='/login' element={<LoginScreen />} />
               <Route path='/register' element={<RegisterScreen />} />
               <Route path='/dashboard' element={<DashboardScreen />} />
-              <Route path='/' element={<Homescreen />} />
+              <Route path='/' element={<HomeScreen />} />
               <Route path='/*' element={<NotFoundScreen />} />
             </Routes>
           </div>
