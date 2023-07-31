@@ -31,8 +31,9 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
+//check admin access rights
 const admin = (req, res, next) => {
-  if (req.user && req.user.isAdmin) {
+  if (req.user && req.user.userType === 'admin') {
     next();
   } else {
     res.status(401);
@@ -40,4 +41,18 @@ const admin = (req, res, next) => {
   }
 };
 
-export { protect, admin };
+//check admin or reviewer access rights
+const reviewer = (req, res, next) => {
+  if (
+    req.user &&
+    req.user.userType === 'admin' &&
+    req.user.userType === 'reviewer'
+  ) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error('Not authorized as a reviewer');
+  }
+};
+
+export { protect, admin, reviewer };
