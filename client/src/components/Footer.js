@@ -1,10 +1,16 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
-function Footer() {
-  return (
+const Footer = () => {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
+
+  return !userInfo ? (
+    ''
+  ) : (
     <div className='h-2/5 bg-[rgba(24,24,36,.75)] flex items-center'>
       <div className='w-2/3 p-24'>
-        <div className='font-bold pb-6 text-4xl text-center'>
+        <div className='pb-6 text-4xl font-bold text-center'>
           College Review
         </div>
         <div className='p-10 pb-0'>
@@ -14,7 +20,7 @@ function Footer() {
           commodi qui.
         </div>
       </div>
-      <div className='w-1/3 text-2xl font-bold flex justify-center flex-col items-center'>
+      <div className='flex flex-col items-center justify-center w-1/3 text-2xl font-bold'>
         <div className='pt-4'>
           <a href='/'>home</a>
         </div>
@@ -33,6 +39,6 @@ function Footer() {
       </div>
     </div>
   );
-}
+};
 
 export default Footer;

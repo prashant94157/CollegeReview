@@ -1,7 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
-function Header() {
-  return (
+const Header = () => {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  return !userInfo ? (
+    ''
+  ) : (
     <div className='flex items-end h-24 font-sans text-2xl font-bold'>
       <div className='flex flex-wrap justify-between w-full'>
         <div className='w-1\/4 pl-10'>
@@ -49,6 +55,6 @@ function Header() {
       </div>
     </div>
   );
-}
+};
 
 export default Header;
