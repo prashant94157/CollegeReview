@@ -1,9 +1,16 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { logout } from '../actions/userActions';
 
 const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const dispatch = useDispatch();
+  const onClick = () => {
+    dispatch(logout());
+  };
 
   return !userInfo ? (
     ''
@@ -44,12 +51,12 @@ const Header = () => {
             </a>
           </div>
           <div className='sm:pr-10'>
-            <a
+            <button
               className='hover:border-b-2 hover:text-[#fff000] hover:border-b-[#fff000]'
-              href='/projects.html'
+              onClick={onClick}
             >
-              About
-            </a>
+              Log out
+            </button>
           </div>
         </div>
       </div>

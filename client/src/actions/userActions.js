@@ -104,7 +104,6 @@ const register = (name, email, password) => async (dispatch) => {
 
 const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
-  localStorage.removeItem('cartItems');
 
   dispatch({
     type: USER_LOGOUT,
