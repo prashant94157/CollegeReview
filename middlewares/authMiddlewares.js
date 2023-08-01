@@ -54,4 +54,13 @@ const reviewer = (req, res, next) => {
   }
 };
 
-export { protect, admin, reviewer };
+const subscribed = asyncHandler(async (req, res, next) => {
+  if (req.user && req.user.subscribedTill > Date.now) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error('Subscribe to view this content!!!');
+  }
+});
+
+export { protect, admin, reviewer, subscribed };

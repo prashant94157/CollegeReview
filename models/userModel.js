@@ -21,6 +21,11 @@ const userSchema = mongoose.Schema(
       required: true,
       default: 'user', // 'admin' , 'reviewer'
     },
+    subscribedTill: {
+      type: Date,
+      required: true,
+      default: Date.now,
+    },
   },
   { timestamps: true }
 );

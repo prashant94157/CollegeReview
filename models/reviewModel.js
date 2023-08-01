@@ -12,7 +12,7 @@ const reviewSchema = mongoose.Schema({
     ref: 'College',
   },
   document: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true,
   },
   rating: {
@@ -20,7 +20,7 @@ const reviewSchema = mongoose.Schema({
     required: true,
     default: 5,
   },
-  content: {
+  description: {
     type: String,
     required: true,
   },

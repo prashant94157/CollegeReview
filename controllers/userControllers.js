@@ -117,6 +117,7 @@ const getUsers = asyncHandler(async (req, res) => {
 
   const count = await User.count({});
   const users = await User.find({})
+    .select('-password')
     .limit(pageSize)
     .skip(pageSize * (page - 1));
   res.json({ users, page, pages: Math.ceil(count / pageSize) });
