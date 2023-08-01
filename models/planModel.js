@@ -10,8 +10,8 @@ const planSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
-  time: {
-    type: Date,
+  days: {
+    type: Number,
     required: true,
   },
   planType: {

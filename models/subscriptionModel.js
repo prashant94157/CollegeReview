@@ -18,6 +18,13 @@ const subscriptionSchema = mongoose.Schema({
   paidAt: {
     type: Date,
   },
+  startedAt: {
+    type: Date,
+    required: true,
+  },
+  pausedAt: {
+    type: Date,
+  },
 });
 
 const Subscription = mongoose.model('Subscription', subscriptionSchema);
