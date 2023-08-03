@@ -10,6 +10,7 @@ import connectDB from './config/db.js';
 import { errorHandler, notFound } from './middlewares/errorMiddlewares.js';
 import userRoutes from './routes/userRoutes.js';
 import planRoutes from './routes/planRoutes.js';
+import collegeRoutes from './routes/collegeRoutes.js';
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use(cors());
 
 app.use('/api/users', userRoutes);
 app.use('/api/plans', planRoutes);
+app.use('/api/colleges', collegeRoutes);
 
 // app.get('/api/config/paypal', (req, res) =>
 //   res.send(process.env.PAYPAL_CLIENT_ID)

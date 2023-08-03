@@ -43,10 +43,7 @@ const admin = (req, res, next) => {
 
 //check admin or reviewer access rights
 const reviewer = (req, res, next) => {
-  if (
-    req.user &&
-    (req.user.userType === 'admin' || req.user.userType === 'reviewer')
-  ) {
+  if (req.user && req.user.userType !== 'user') {
     next();
   } else {
     res.status(401);
@@ -55,7 +52,10 @@ const reviewer = (req, res, next) => {
 };
 
 const subscribed = asyncHandler(async (req, res, next) => {
-  if (req.user && req.user.subscribedTill > Date.now) {
+  if (
+    req.user &&
+    (req.user.userType !== 'user' || req.user.subscribedTill > Date.now)
+  ) {
     next();
   } else {
     res.status(401);

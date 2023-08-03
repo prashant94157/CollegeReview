@@ -1,16 +1,6 @@
 import mongoose from 'mongoose';
 
 const reviewSchema = mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'User',
-  },
-  college: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'College',
-  },
   document: {
     type: String,
     required: true,
@@ -27,6 +17,20 @@ const reviewSchema = mongoose.Schema({
   degree: {
     type: String,
     required: true,
+  },
+  isApproved: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  approvedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   },
 });
 
