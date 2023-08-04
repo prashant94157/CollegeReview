@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 
 const reviewSchema = mongoose.Schema({
-  document: {
-    type: String,
-    required: true,
-  },
+  // document: {
+  //   type: String,
+  //   required: true,
+  // },
   rating: {
     type: Number,
     required: true,
@@ -30,7 +30,7 @@ const reviewSchema = mongoose.Schema({
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
   },
 });
 

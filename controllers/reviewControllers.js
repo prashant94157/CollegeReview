@@ -3,6 +3,8 @@ import College from '../models/collegeModel.js';
 import Review from '../models/reviewModel.js';
 
 // @desc    create review
+// @user can create review to all approved colleges but can even create to his disapproved college
+// @admin & @reviewer create review
 // @route   POST /api/colleges/:id/reviews
 // @access  private(user)
 const createReview = asyncHandler(async (req, res) => {
@@ -14,7 +16,7 @@ const createReview = asyncHandler(async (req, res) => {
       college.isApproved ||
       college.createdBy.equals(req.user._id)
     ) {
-      const { rating, description, degree } = res.body;
+      const { rating, description, degree } = req.body;
 
       const review = await Review.create({
         createdBy: req.user._id,
@@ -23,10 +25,7 @@ const createReview = asyncHandler(async (req, res) => {
         degree,
       });
 
-      college.disapprovedReviews.push({
-        review: review._id,
-        name: req.user.name,
-      });
+      college.disapprovedReviews.push(review._id);
 
       const updatedCollege = await college.save();
 
@@ -68,7 +67,7 @@ const updateReview = asyncHandler(async (req, res) => {
 
       if (review.isApproved) {
         college.approvedReviews = college.approvedReviews.filter(
-          (i) => !i.review.equals(review._id)
+          (i) => !i.equals(review._id)
         );
         if (college.totalReviews === 1) college.avgRating = 5;
         else {
@@ -79,21 +78,18 @@ const updateReview = asyncHandler(async (req, res) => {
         college.totalReviews--;
 
         review.isApproved = false;
-        review.rating = res.body.rating || review.rating;
-        review.description = res.body.description || review.description;
-        review.degree = res.body.degree || review.degree;
+        review.rating = req.body.rating || review.rating;
+        review.description = req.body.description || review.description;
+        review.degree = req.body.degree || review.degree;
 
         updatedReview = await review.save();
 
-        college.disapprovedReviews.push({
-          review: updatedReview._id,
-          name: req.user.name,
-        });
+        college.disapprovedReviews.push(updatedReview._id);
         await college.save();
       } else {
-        review.rating = res.body.rating || review.rating;
-        review.description = res.body.description || review.description;
-        review.degree = res.body.degree || review.degree;
+        review.rating = req.body.rating || review.rating;
+        review.description = req.body.description || review.description;
+        review.degree = req.body.degree || review.degree;
         updatedReview = await review.save();
       }
 
@@ -125,7 +121,7 @@ const deleteReview = asyncHandler(async (req, res) => {
     if (req.user.userType !== 'user' || req.user._id.equals(review.createdBy)) {
       if (review.isApproved) {
         college.approvedReviews = college.approvedReviews.filter(
-          (i) => i.review !== review._id
+          (i) => i !== review._id
         );
 
         if (college.totalReviews === 1) college.avgRating = 5;
@@ -137,7 +133,7 @@ const deleteReview = asyncHandler(async (req, res) => {
         college.totalReviews--;
       } else {
         college.disapprovedReviews = college.disapprovedReviews.filter(
-          (i) => i.review !== review._id
+          (i) => i !== review._id
         );
       }
       await college.save();
@@ -157,7 +153,7 @@ const deleteReview = asyncHandler(async (req, res) => {
 
 // @desc    read all approved reviews
 // @route   GET /api/colleges/:id/reviews
-// @access  private(user)
+// @access  private(subscribed user)
 const getApprovedReviews = asyncHandler(async (req, res) => {
   const college = await College.findOne({
     id: {
@@ -215,7 +211,7 @@ const getDisapprovedReviews = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    read college
+// @desc    read review
 // @route   GET /api/colleges/:id/reviews/:review_id
 // @access  private(admin + reviewer + subscribed User)
 const getReviewById = asyncHandler(async (req, res) => {
@@ -224,9 +220,9 @@ const getReviewById = asyncHandler(async (req, res) => {
 
   if (college && review) {
     if (
-      req.user.userType !== 'user' ||
-      review.createdBy.equals(req.user._id) ||
-      (college.isApproved === true && review.isApproved === true)
+      req.user.userType !== 'user' || //for admin and reviewer
+      review.createdBy.equals(req.user._id) || // to view own reviews
+      (college.isApproved === true && review.isApproved === true) // to view only approved reviews
     ) {
       res.json(college);
     } else {
@@ -239,33 +235,42 @@ const getReviewById = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Approve college
+// @desc    Approve review
 // @route   PATCH /api/colleges/:id/reviews/:review_id
 // @access  private(admin, reviewer)
 const approveReview = asyncHandler(async (req, res) => {
   const college = await College.findById(req.params.id);
   const review = await Review.findById(req.params.review_id);
 
-  if (college && review) {
-    if (college.isApproved) {
-      if (review.isApproved) {
+  if (college && review) { //checking whether college & review exist
+    if (college.isApproved) { // checking whether college is already approved or not
+      if (review.isApproved) { // checking whether review is already approved or not
         res.status(404);
         throw new Error('Review is already approved!!!');
-      } else if (req.user.userType === 'user') {
+      } else if (req.user.userType === 'user') {  // checking admin, reviewer
         res.status(404);
         throw new Error("You don't have enough access to approve college!!!");
       } else {
+        //approving review
         review.isApproved = true;
         review.approvedBy = req.user._id;
         await review.save();
 
+        //removing review from disapprovedReviews array
         college.disapprovedReviews = college.disapprovedReviews.filter(
-          (i) => !i.review.equals(review._id)
+          (i) => !i.equals(review._id)
         );
+
+        // adding rating
         college.avgRating =
           (college.avgRating * college.totalReviews + review.rating) /
           (college.totalReviews + 1);
+
+        // adding approveReview count
         college.totalReviews++;
+
+        // adding review to approving array
+        college.approvedReviews.push(review._id);
         await college.save();
 
         res.json({ message: 'College approved successfully!!!' });
@@ -298,24 +303,29 @@ const disapproveReview = asyncHandler(async (req, res) => {
           "You don't have enough access to disapprove college!!!"
         );
       } else {
+        // disapproving review
         review.isApproved = false;
         review.approvedBy = undefined;
         await review.save();
 
+        // removing review from approving reviews array
         college.approvedReviews = college.approvedReviews.filter(
-          (i) => !i.review.equals(review._id)
+          (i) => !i.equals(review._id)
         );
+
+        // if one review is there, so setting avgRating to 5 else removing rating from avgRating
         if (college.totalReviews === 1) college.avgRating = 5;
         else {
           college.avgRating =
             (college.avgRating * college.totalReviews - review.rating) /
             (college.totalReviews - 1);
         }
+
+        // decreasing approved review count
         college.totalReviews--;
-        college.disapprovedReviews.push({
-          review: review._id,
-          name: req.user.name,
-        });
+
+        // adding review to disapproved reviews array
+        college.disapprovedReviews.push(review._id);
         await college.save();
 
         res.json({ message: 'College disapproved successfully!!!' });

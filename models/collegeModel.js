@@ -24,28 +24,16 @@ const collegeSchema = mongoose.Schema({
   },
   approvedReviews: [
     {
-      review: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Review',
-      },
-      name: {
-        type: String,
-        required: true,
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'Review',
     },
   ],
   disapprovedReviews: [
     {
-      review: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Review',
-      },
-      name: {
-        type: String,
-        required: true,
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'Review',
     },
   ],
   totalReviews: {

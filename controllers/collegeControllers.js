@@ -176,7 +176,9 @@ const getDisapprovedColleges = asyncHandler(async (req, res) => {
 // @route   GET /api/colleges/:id
 // @access  private(admin + reviewer + subscribed User)
 const getCollegeById = asyncHandler(async (req, res) => {
-  const college = await College.findById(req.params.id);
+  const college = await College.findById(req.params.id)
+    .populate('disapprovedReviews')
+    .populate('approvedReviews');
 
   if (college) {
     if (
