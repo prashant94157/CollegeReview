@@ -1,52 +1,43 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const onClick = () => {};
 
   return (
-    <div className='flex items-end h-24 font-sans text-2xl font-bold'>
-      <div className='flex flex-wrap justify-between w-full'>
-        <div className='w-1\/4 pl-10'>
-          <a
+    <div className='flex items-center justify-around h-24 font-sans text-2xl font-extrabold shadow-md'>
+      <div>
+        <Link
+          className='hover:border-b-2 hover:text-[#fff000] hover:border-b-[#fff000]'
+          to='/dashboard'
+        >
+          Home
+        </Link>
+      </div>
+      <div className='flex space-x-10'>
+        <div>
+          <Link
             className='hover:border-b-2 hover:text-[#fff000] hover:border-b-[#fff000]'
-            href='/'
+            to='/plans'
           >
-            Home
-          </a>
+            Plans
+          </Link>
         </div>
-        <div className='flex justify-between gap-10 w-3\/4 m-auto sm:m-0'>
-          <div>
-            <a
-              className='hover:border-b-2 hover:text-[#fff000] hover:border-b-[#fff000]'
-              href='/experience.html'
-            >
-              Experience
-            </a>
-          </div>
-          <div>
-            <a
-              className='hover:border-b-2 hover:text-[#fff000] hover:border-b-[#fff000]'
-              href='/education.html'
-            >
-              Education
-            </a>
-          </div>
-          <div>
-            <a
-              className='hover:border-b-2 hover:text-[#fff000] hover:border-b-[#fff000]'
-              href='/projects.html'
-            >
-              Projects
-            </a>
-          </div>
-          <div className='sm:pr-10'>
-            <button
-              className='hover:border-b-2 hover:text-[#fff000] hover:border-b-[#fff000]'
-              onClick={onClick}
-            >
-              Log out
-            </button>
-          </div>
+        <div>
+          <Link
+            className='hover:border-b-2 hover:text-[#fff000] hover:border-b-[#fff000]'
+            to='/colleges'
+          >
+            Colleges
+          </Link>
+        </div>
+        <div>
+          <button
+            className='hover:border-b-2 hover:text-[#fff000] hover:border-b-[#fff000]'
+            onClick={onClick}
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>
