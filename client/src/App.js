@@ -70,6 +70,11 @@ const App = () => {
               <Route path='/users' element={<UserListScreen />} />
               <Route path='/users/:id' element={<UserScreen />} />
 
+              {/* <Route path='/reviewers/reviews/approved' element={} />
+              <Route path='/reviewers/reviews/disapproved' element={} />
+              <Route path='/reviewers/colleges/approved' element={} />
+              <Route path='/reviewers/colleges/unapproved' element={} /> */}
+
               <Route
                 path='/plans/:id/create'
                 element={<PlanCreateEditScreen />}
@@ -82,15 +87,21 @@ const App = () => {
               <Route path='/plans/:id' element={<PlanScreen />} />
 
               <Route
-                path='/reviews/:id/edit'
+                path='/colleges/:id/reviews/:id/edit'
                 element={<ReviewCreateEditListScreen />}
               />
               <Route
-                path='/reviews/:id/create'
+                path='/colleges/:id/reviews/:id/create'
                 element={<ReviewCreateEditListScreen />}
               />
-              <Route path='/reviews' element={<ReviewListScreen />} />
-              <Route path='/reviews/:id' element={<ReviewScreen />} />
+              <Route
+                path='/colleges/:id/reviews'
+                element={<ReviewListScreen />}
+              />
+              <Route
+                path='/colleges/:id/reviews/:id'
+                element={<ReviewScreen />}
+              />
 
               <Route path='/colleges' element={<CollegeListScreen />} />
               <Route
