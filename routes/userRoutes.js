@@ -10,6 +10,7 @@ import {
   deleteUser,
   updateUser,
   getUserById,
+  updateUserSubscription,
 } from '../controllers/userControllers.js';
 import { protect, admin, reviewer } from '../middlewares/authMiddlewares.js';
 
@@ -29,5 +30,7 @@ router
   .delete(protect, admin, deleteUser)
   .get(protect, reviewer, getUserById)
   .put(protect, admin, updateUser);
+
+router.patch('/:id/plans/:plan_id', protect, reviewer, updateUserSubscription);
 
 export default router;

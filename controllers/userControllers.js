@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 
 import User from '../models/userModel.js';
+import Plan from '../models/planModel.js';
 import generateToken from '../utils/generateToken.js';
 
 // @desc    Auth user and get token
@@ -61,7 +62,6 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route   GET /api/users/profile
 // @access  private(user)
 const getUserProfile = asyncHandler(async (req, res) => {
-  // console.log(req.user);
   const user = await User.findById(req.user).select('-password');
 
   if (user) {
@@ -177,29 +177,40 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 });
 
-// // @desc    Update user
-// // @route   PATCH /api/users/:id
-// // @access  Private(reviewer + admin)
-// const updateUserSubscription = asyncHandler(async (req, res) => {
-//   const user = await User.findById(req.params.id);
+// @desc    Subscribe user
+// @route   PATCH /api/users/:id/plans/:plan_id
+// @access  Private(reviewer + admin)
+const updateUserSubscription = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  const plan = await Plan.findById(req.params.plan_id);
 
-//   if (user) {
-//     // user.subscriptionWillEndAt = res.body.time + Date.now;
-//     console.log(res.body.time + Date.now);
-//     const updatedUser = await user.save();
+  if (user && plan) {
+    let subscribedDate = new Date(user.subscribedTill);
+    subscribedDate.setDate(subscribedDate.getDate() + plan.days);
 
-//     res.json({
-//       _id: updatedUser._id,
-//       name: updatedUser.name,
-//       email: updatedUser.email,
-//       userType: updatedUser.userType,
-//       subscriptionWillEndAt: updatedUser.subscriptionWillEndAt,
-//     });
-//   } else {
-//     res.status(404);
-//     throw new Error('User not found');
-//   }
-// });
+    let currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + plan.days);
+
+    if (currentDate > subscribedDate) {
+      user.subscribedTill = currentDate;
+    } else {
+      user.subscribedTill = subscribedDate;
+    }
+
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      userType: updatedUser.userType,
+      subscribedTill: updatedUser.subscribedTill,
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
 
 export {
   authUser,
@@ -210,4 +221,5 @@ export {
   deleteUser,
   getUserById,
   updateUser,
+  updateUserSubscription,
 };
