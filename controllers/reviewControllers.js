@@ -5,7 +5,7 @@ import Review from '../models/reviewModel.js';
 // @desc    create review
 // @user can create review to all approved colleges but can even create to his disapproved college
 // @admin & @reviewer create review
-// @route   POST /api/colleges/:id/reviews
+// @route   POST /api/v1/colleges/:id/reviews
 // @access  private(user)
 const createReview = asyncHandler(async (req, res) => {
   const college = await College.findById(req.params.id);
@@ -52,7 +52,7 @@ const createReview = asyncHandler(async (req, res) => {
 });
 
 // @desc    update review
-// @route   PUT /api/colleges/:id/reviews/:review_id
+// @route   PUT /api/v1/colleges/:id/reviews/:review_id
 // @access  private(user)
 const updateReview = asyncHandler(async (req, res) => {
   const college = await College.findById(req.params.id);
@@ -111,7 +111,7 @@ const updateReview = asyncHandler(async (req, res) => {
 });
 
 // @desc    delete review
-// @route   DELETE /api/colleges/:id/reviews/:review_id
+// @route   DELETE /api/v1/colleges/:id/reviews/:review_id
 // @access  private(user)
 const deleteReview = asyncHandler(async (req, res) => {
   const college = await College.findById(req.params.id);
@@ -152,7 +152,7 @@ const deleteReview = asyncHandler(async (req, res) => {
 });
 
 // @desc    read all approved reviews
-// @route   GET /api/colleges/:id/reviews
+// @route   GET /api/v1/colleges/:id/reviews
 // @access  private(subscribed user)
 const getApprovedReviews = asyncHandler(async (req, res) => {
   const college = await College.findOne({
@@ -179,7 +179,7 @@ const getApprovedReviews = asyncHandler(async (req, res) => {
 });
 
 // @desc    read all disapproved reviews
-// @route   GET /api/colleges/:id/reviews/disapproved
+// @route   GET /api/v1/colleges/:id/reviews/disapproved
 // @access  private(user)
 const getDisapprovedReviews = asyncHandler(async (req, res) => {
   const college = await College.findOne({
@@ -212,7 +212,7 @@ const getDisapprovedReviews = asyncHandler(async (req, res) => {
 });
 
 // @desc    read review
-// @route   GET /api/colleges/:id/reviews/:review_id
+// @route   GET /api/v1/colleges/:id/reviews/:review_id
 // @access  private(admin + reviewer + subscribed User)
 const getReviewById = asyncHandler(async (req, res) => {
   const college = await College.findById(req.params.id);
@@ -236,18 +236,22 @@ const getReviewById = asyncHandler(async (req, res) => {
 });
 
 // @desc    Approve review
-// @route   PATCH /api/colleges/:id/reviews/:review_id
+// @route   PATCH /api/v1/colleges/:id/reviews/:review_id
 // @access  private(admin, reviewer)
 const approveReview = asyncHandler(async (req, res) => {
   const college = await College.findById(req.params.id);
   const review = await Review.findById(req.params.review_id);
 
-  if (college && review) { //checking whether college & review exist
-    if (college.isApproved) { // checking whether college is already approved or not
-      if (review.isApproved) { // checking whether review is already approved or not
+  if (college && review) {
+    //checking whether college & review exist
+    if (college.isApproved) {
+      // checking whether college is already approved or not
+      if (review.isApproved) {
+        // checking whether review is already approved or not
         res.status(404);
         throw new Error('Review is already approved!!!');
-      } else if (req.user.userType === 'user') {  // checking admin, reviewer
+      } else if (req.user.userType === 'user') {
+        // checking admin, reviewer
         res.status(404);
         throw new Error("You don't have enough access to approve college!!!");
       } else {
@@ -286,7 +290,7 @@ const approveReview = asyncHandler(async (req, res) => {
 });
 
 // @desc    Disapprove college
-// @route   PATCH /api/colleges/:id/reviews/:review_id/disapprove
+// @route   PATCH /api/v1/colleges/:id/reviews/:review_id/disapprove
 // @access  private(admin, reviewer)
 const disapproveReview = asyncHandler(async (req, res) => {
   const college = await College.findById(req.params.id);

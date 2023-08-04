@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler';
 import College from '../models/collegeModel.js';
 
 // @desc    Create college
-// @route   POST /api/colleges
+// @route   POST /api/v1/colleges
 // @access  private(user)
 const createCollege = asyncHandler(async (req, res) => {
   const { name, city, state, country } = req.body;
@@ -55,7 +55,7 @@ const createCollege = asyncHandler(async (req, res) => {
 });
 
 // @desc    Update college which is unapproved by user, reviewer but admin can update college in all cases
-// @route   PUT /api/colleges/:id
+// @route   PUT /api/v1/colleges/:id
 // @access  private(user)
 const updateCollege = asyncHandler(async (req, res) => {
   const college = await College.findById(req.params.id);
@@ -97,7 +97,7 @@ const updateCollege = asyncHandler(async (req, res) => {
 });
 
 // @desc    Delete college which is unapproved by user, reviewer but admin can delete college even through it is approved
-// @route   DELETE /api/colleges/:id
+// @route   DELETE /api/v1/colleges/:id
 // @access  private(admin, reviewer, user(created))
 const deleteCollege = asyncHandler(async (req, res) => {
   const college = await College.findById(req.params.id);
@@ -123,7 +123,7 @@ const deleteCollege = asyncHandler(async (req, res) => {
 });
 
 // @desc    read all approved colleges for user
-// @route   GET /api/colleges
+// @route   GET /api/v1/colleges
 // @access  private(subscribed User, reviewer, admin)
 const getApprovedColleges = asyncHandler(async (req, res) => {
   const pageSize = 5;
@@ -143,7 +143,7 @@ const getApprovedColleges = asyncHandler(async (req, res) => {
 });
 
 // @desc    read all disapproved colleges for user
-// @route   GET /api/colleges/disapproved
+// @route   GET /api/v1/colleges/disapproved
 // @access  private(User, reviewer, admin)
 const getDisapprovedColleges = asyncHandler(async (req, res) => {
   const pageSize = 5;
@@ -173,7 +173,7 @@ const getDisapprovedColleges = asyncHandler(async (req, res) => {
 });
 
 // @desc    read college
-// @route   GET /api/colleges/:id
+// @route   GET /api/v1/colleges/:id
 // @access  private(admin + reviewer + subscribed User)
 const getCollegeById = asyncHandler(async (req, res) => {
   const college = await College.findById(req.params.id)
@@ -198,7 +198,7 @@ const getCollegeById = asyncHandler(async (req, res) => {
 });
 
 // @desc    Approve college
-// @route   PATCH /api/colleges/:id
+// @route   PATCH /api/v1/colleges/:id
 // @access  private(admin, reviewer)
 const approveCollege = asyncHandler(async (req, res) => {
   const college = await College.findById(req.params.id);
@@ -225,7 +225,7 @@ const approveCollege = asyncHandler(async (req, res) => {
 });
 
 // @desc    Disapprove college
-// @route   PATCH /api/colleges/:id/disapprove
+// @route   PATCH /api/v1/colleges/:id/disapprove
 // @access  private(admin, reviewer)
 const disapproveCollege = asyncHandler(async (req, res) => {
   const college = await College.findById(req.params.id);

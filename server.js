@@ -25,9 +25,9 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.json());
 app.use(cors());
 
-app.use('/api/users', userRoutes);
-app.use('/api/plans', planRoutes);
-app.use('/api/colleges', collegeRoutes);
+app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/plans', planRoutes);
+app.use('/api/v1/colleges', collegeRoutes);
 
 // app.get('/api/config/paypal', (req, res) =>
 //   res.send(process.env.PAYPAL_CLIENT_ID)

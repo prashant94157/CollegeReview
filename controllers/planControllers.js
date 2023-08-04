@@ -3,7 +3,7 @@ import asyncHandler from 'express-async-handler';
 import Plan from '../models/planModel.js';
 
 // @desc    Create plans
-// @route   POST /api/plans
+// @route   POST /api/v1/plans
 // @access  private(admin)
 const createPlan = asyncHandler(async (req, res) => {
   const { price, days, planType } = req.body;
@@ -23,7 +23,7 @@ const createPlan = asyncHandler(async (req, res) => {
 });
 
 // @desc    Update plan
-// @route   PUT /api/plans/:id
+// @route   PUT /api/v1/plans/:id
 // @access  private(admin)
 const updatePlan = asyncHandler(async (req, res) => {
   const plan = await Plan.findById(req.params.id);
@@ -44,7 +44,7 @@ const updatePlan = asyncHandler(async (req, res) => {
 });
 
 // @desc    Delete plan
-// @route   DELETE /api/plans/:id
+// @route   DELETE /api/v1/plans/:id
 // @access  private(admin)
 const deletePlan = asyncHandler(async (req, res) => {
   const plan = await Plan.findById(req.params.id);
@@ -59,7 +59,7 @@ const deletePlan = asyncHandler(async (req, res) => {
 });
 
 // @desc    Get plan by id
-// @route   GET /api/plans/:id
+// @route   GET /api/v1/plans/:id
 // @access  public
 const getPlanByID = asyncHandler(async (req, res) => {
   const plan = await Plan.findById(req.params.id);
@@ -73,7 +73,7 @@ const getPlanByID = asyncHandler(async (req, res) => {
 });
 
 // @desc    Get all plans
-// @route   GET /api/plans, optional = ?pageNumber=2
+// @route   GET /api/v1/plans, optional = ?pageNumber=2
 // @access  Public
 const getPlans = asyncHandler(async (req, res) => {
   const pageSize = 5;
