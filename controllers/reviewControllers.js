@@ -16,13 +16,14 @@ const createReview = asyncHandler(async (req, res) => {
       college.isApproved ||
       college.createdBy.equals(req.user._id)
     ) {
-      const { rating, description, degree } = req.body;
+      const { rating, description, degree, title } = req.body;
 
       const review = await Review.create({
         createdBy: req.user._id,
         rating,
         description,
         degree,
+        title,
       });
 
       college.disapprovedReviews.push(review._id);
@@ -34,6 +35,7 @@ const createReview = asyncHandler(async (req, res) => {
           id: review._id,
           createdBy: review.createdBy,
           rating: review.rating,
+          title: review.title,
           description: review.description,
           degree: review.degree,
         });
@@ -78,6 +80,7 @@ const updateReview = asyncHandler(async (req, res) => {
         college.totalReviews--;
 
         review.isApproved = false;
+        review.title = req.body.title || review.title;
         review.rating = req.body.rating || review.rating;
         review.description = req.body.description || review.description;
         review.degree = req.body.degree || review.degree;
@@ -87,6 +90,7 @@ const updateReview = asyncHandler(async (req, res) => {
         college.disapprovedReviews.push(updatedReview._id);
         await college.save();
       } else {
+        review.title = req.body.title || review.title;
         review.rating = req.body.rating || review.rating;
         review.description = req.body.description || review.description;
         review.degree = req.body.degree || review.degree;
@@ -97,6 +101,7 @@ const updateReview = asyncHandler(async (req, res) => {
         id: updatedReview._id,
         createdBy: updatedReview.createdBy,
         rating: updatedReview.rating,
+        title: updatedReview.title,
         description: updatedReview.description,
         degree: updatedReview.degree,
       });

@@ -49,7 +49,7 @@ const App = () => {
         />
         <div className='relative z-20 w-full'>
           <Header />
-          <div className='h-screen'>
+          <div className='min-h-screen'>
             <Routes>
               <Route path='/login' element={<LoginScreen />} />
               <Route path='/register' element={<RegisterScreen />} />
