@@ -1,20 +1,9 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { logout } from '../actions/userActions';
 
 const Header = () => {
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const onClick = () => {};
 
-  const dispatch = useDispatch();
-  const onClick = () => {
-    dispatch(logout());
-  };
-
-  return !userInfo ? (
-    ''
-  ) : (
+  return (
     <div className='flex items-end h-24 font-sans text-2xl font-bold'>
       <div className='flex flex-wrap justify-between w-full'>
         <div className='w-1\/4 pl-10'>
