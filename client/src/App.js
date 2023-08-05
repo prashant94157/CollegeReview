@@ -70,10 +70,7 @@ const App = () => {
               <Route path='/users' element={<UserListScreen />} />
               <Route path='/users/:id' element={<UserScreen />} />
 
-              <Route
-                path='/plans/:id/create'
-                element={<PlanCreateEditScreen />}
-              />
+              <Route path='/plans/create' element={<PlanCreateEditScreen />} />
               <Route
                 path='/plans/:id/edit'
                 element={<PlanCreateEditScreen />}
@@ -86,7 +83,7 @@ const App = () => {
                 element={<ReviewCreateEditListScreen />}
               />
               <Route
-                path='/colleges/:id/reviews/:id/create'
+                path='/colleges/:id/reviews/create'
                 element={<ReviewCreateEditListScreen />}
               />
               <Route
@@ -100,7 +97,7 @@ const App = () => {
 
               <Route path='/colleges' element={<CollegeListScreen />} />
               <Route
-                path='/colleges/:id/create'
+                path='/colleges/create'
                 element={<CollegeCreateEditScreen />}
               />
               <Route
