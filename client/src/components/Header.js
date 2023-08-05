@@ -1,10 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const onClick = () => {};
 
-  return (
+  return !userInfo ? (
+    ''
+  ) : (
     <div className='flex items-center justify-around h-24 font-sans text-2xl font-extrabold shadow-md'>
       <div>
         <Link

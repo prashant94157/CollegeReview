@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Alert from '../components/Alert';
+import Spinner from '../components/Spinner';
+import { register } from '../actions/userActions';
 
 const Register = () => {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo: userInfoLogin } = userLogin;
+
+  const userRegister = useSelector((state) => state.userRegister);
+  const { userInfo, loading, error } = userRegister;
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -21,12 +33,22 @@ const Register = () => {
     if (password !== confirmPassword) {
       setMessage('Passwords do not match');
     } else {
+      dispatch(register({ name, password, email }));
     }
   };
 
-  return (
+  useEffect(() => {
+    if (userInfoLogin) {
+      navigate('/dashboard');
+    }
+  }, [userInfoLogin, navigate]);
+
+  return loading ? (
+    <Spinner />
+  ) : (
     <div className='h-screen'>
       {message && <Alert>{message}</Alert>}
+      {error && <Alert>{error}</Alert>}
       <div className='flex flex-col justify-center flex-1 px-6 min-h-[95vh] lg:px-8'>
         <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
           <h2 className='text-2xl font-bold leading-9 tracking-tight text-center'>

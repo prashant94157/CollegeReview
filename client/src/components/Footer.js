@@ -1,7 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const Footer = () => {
-  return (
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  return !userInfo ? (
+    ''
+  ) : (
     <div className='h-2/5 bg-[rgba(24,24,36,.75)] flex items-center'>
       <div className='w-2/3 p-24'>
         <div className='pb-6 text-4xl font-bold text-center'>

@@ -21,6 +21,7 @@ import PlanScreen from './screens/PlanScreen';
 import ReviewCreateEditListScreen from './screens/ReviewCreateEditListScreen';
 import ReviewListScreen from './screens/ReviewListScreen';
 import ReviewScreen from './screens/ReviewScreen';
+import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
   const [mousePosition, setMousePosition] = useState({
@@ -66,47 +67,78 @@ const App = () => {
               <Route path='/login' element={<LoginScreen />} />
               <Route path='/register' element={<RegisterScreen />} />
 
-              <Route path='/users/:id/edit' element={<UserEditScreen />} />
-              <Route path='/users' element={<UserListScreen />} />
-              <Route path='/users/:id' element={<UserScreen />} />
+              <Route
+                path='/users/:id/edit'
+                element={<PrivateRoute component={UserEditScreen} />}
+              />
+              <Route
+                path='/users'
+                element={<PrivateRoute component={UserListScreen} />}
+              />
+              <Route
+                path='/users/:id'
+                element={<PrivateRoute component={UserScreen} />}
+              />
 
-              <Route path='/plans/create' element={<PlanCreateEditScreen />} />
+              <Route
+                path='/plans/create'
+                element={<PrivateRoute component={PlanCreateEditScreen} />}
+              />
               <Route
                 path='/plans/:id/edit'
-                element={<PlanCreateEditScreen />}
+                element={<PrivateRoute component={PlanCreateEditScreen} />}
               />
-              <Route path='/plans' element={<PlanListScreen />} />
-              <Route path='/plans/:id' element={<PlanScreen />} />
+              <Route
+                path='/plans'
+                element={<PrivateRoute component={PlanListScreen} />}
+              />
+              <Route
+                path='/plans/:id'
+                element={<PrivateRoute component={PlanScreen} />}
+              />
 
               <Route
                 path='/colleges/:id/reviews/:id/edit'
-                element={<ReviewCreateEditListScreen />}
+                element={
+                  <PrivateRoute component={ReviewCreateEditListScreen} />
+                }
               />
               <Route
                 path='/colleges/:id/reviews/create'
-                element={<ReviewCreateEditListScreen />}
+                element={
+                  <PrivateRoute component={ReviewCreateEditListScreen} />
+                }
               />
               <Route
                 path='/colleges/:id/reviews'
-                element={<ReviewListScreen />}
+                element={<PrivateRoute component={ReviewListScreen} />}
               />
               <Route
                 path='/colleges/:id/reviews/:id'
-                element={<ReviewScreen />}
+                element={<PrivateRoute component={ReviewScreen} />}
               />
 
-              <Route path='/colleges' element={<CollegeListScreen />} />
+              <Route
+                path='/colleges'
+                element={<PrivateRoute component={CollegeListScreen} />}
+              />
               <Route
                 path='/colleges/create'
-                element={<CollegeCreateEditScreen />}
+                element={<PrivateRoute component={CollegeCreateEditScreen} />}
               />
               <Route
                 path='/colleges/:id/edit'
-                element={<CollegeCreateEditScreen />}
+                element={<PrivateRoute component={CollegeCreateEditScreen} />}
               />
-              <Route path='/colleges/:id' element={<CollegeScreen />} />
+              <Route
+                path='/colleges/:id'
+                element={<PrivateRoute component={CollegeScreen} />}
+              />
 
-              <Route path='/dashboard' element={<DashboardScreen />} />
+              <Route
+                path='/dashboard'
+                element={<PrivateRoute component={DashboardScreen} />}
+              />
               <Route path='/' element={<HomeScreen />} />
               <Route path='/*' element={<NotFoundScreen />} />
             </Routes>
