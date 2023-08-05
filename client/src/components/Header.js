@@ -1,12 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../actions/userActions';
 
 const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const onClick = () => {};
+  const dispatch = useDispatch();
+
+  const onClick = () => {
+    dispatch(logout());
+  };
 
   return !userInfo ? (
     ''

@@ -4,6 +4,7 @@ import {
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
+  USER_LOGOUT,
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
@@ -88,4 +89,14 @@ const register =
     }
   };
 
-export { login, register };
+const logout = () => async (dispatch) => {
+  try {
+    localStorage.removeItem('userInfo');
+
+    dispatch({
+      type: USER_LOGOUT,
+    });
+  } catch (error) {}
+};
+
+export { login, register, logout };
