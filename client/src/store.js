@@ -7,19 +7,29 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
+import { userReviewsReducer } from './reducers/reviewReducers';
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
+
+  userReviews: userReviewsReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
   : null;
 
+const userReviewsFromStorage = localStorage.getItem('userReviews')
+  ? JSON.parse(localStorage.getItem('userReviews'))
+  : null;
+
 const initialState = {
   userLogin: {
     userInfo: userInfoFromStorage,
+  },
+  userReviews: {
+    reviews: userReviewsFromStorage,
   },
 };
 

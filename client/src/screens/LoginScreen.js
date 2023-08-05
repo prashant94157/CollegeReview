@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -12,6 +12,10 @@ const Login = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  if (userInfo) {
+    navigate('/dashboard');
+  }
 
   const [formData, setFormData] = useState({
     email: '',
@@ -27,18 +31,9 @@ const Login = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log(email, password);
     dispatch(login(email, password));
   };
-
-  useEffect(() => {
-    if (userInfo) {
-      navigate('/dashboard');
-    }
-
-    // return () => {
-    //   second;
-    // };
-  }, [userInfo, navigate]);
 
   return loading ? (
     <Spinner />

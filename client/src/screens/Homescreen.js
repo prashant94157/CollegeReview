@@ -1,7 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const HomeScreen = () => {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const navigate = useNavigate();
+
+  if (userInfo) {
+    navigate('/dashboard');
+  }
+
   return (
     <div className='h-screen pt-24'>
       <div className='pt-20 text-6xl font-bold text-center'>College Review</div>

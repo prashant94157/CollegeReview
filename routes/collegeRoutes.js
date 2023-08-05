@@ -10,15 +10,6 @@ import {
   getCollegeById,
   getDisapprovedColleges,
   updateCollege,
-} from '../controllers/collegeControllers.js';
-
-import {
-  protect,
-  reviewer,
-  subscribed,
-} from '../middlewares/authMiddlewares.js';
-
-import {
   approveReview,
   createReview,
   deleteReview,
@@ -27,7 +18,13 @@ import {
   getReviewById,
   getDisapprovedReviews,
   updateReview,
-} from '../controllers/reviewControllers.js';
+} from '../controllers/collegeControllers.js';
+
+import {
+  protect,
+  reviewer,
+  subscribed,
+} from '../middlewares/authMiddlewares.js';
 
 router
   .route('/')

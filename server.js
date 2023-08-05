@@ -11,6 +11,7 @@ import { errorHandler, notFound } from './middlewares/errorMiddlewares.js';
 import userRoutes from './routes/userRoutes.js';
 import planRoutes from './routes/planRoutes.js';
 import collegeRoutes from './routes/collegeRoutes.js';
+import reviewRoutes from './routes/reviewRoutes.js';
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use(cors());
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/plans', planRoutes);
 app.use('/api/v1/colleges', collegeRoutes);
+app.use('/api/v1/reviews', reviewRoutes);
 
 // app.get('/api/config/paypal', (req, res) =>
 //   res.send(process.env.PAYPAL_CLIENT_ID)
