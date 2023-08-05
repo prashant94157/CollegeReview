@@ -70,11 +70,6 @@ const App = () => {
               <Route path='/users' element={<UserListScreen />} />
               <Route path='/users/:id' element={<UserScreen />} />
 
-              {/* <Route path='/reviewers/reviews/approved' element={} />
-              <Route path='/reviewers/reviews/disapproved' element={} />
-              <Route path='/reviewers/colleges/approved' element={} />
-              <Route path='/reviewers/colleges/unapproved' element={} /> */}
-
               <Route
                 path='/plans/:id/create'
                 element={<PlanCreateEditScreen />}
