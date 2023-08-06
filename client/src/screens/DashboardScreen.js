@@ -4,18 +4,14 @@ import Review from '../components/Review';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserReviews } from '../actions/reviewActions';
 import Spinner from '../components/Spinner';
+import Alert from '../components/Alert';
 
 const DashboardScreen = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   const userReviews = useSelector((state) => state.userReviews);
-  const {
-    loading,
-    reviews: { reviews },
-    error,
-    success,
-  } = userReviews;
+  const { loading, reviews, error, success } = userReviews;
 
   const { name, email } = userInfo;
 
@@ -23,12 +19,13 @@ const DashboardScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // if (success)
-    dispatch(getUserReviews());
+    if (!success) {
+      dispatch(getUserReviews());
+    }
     // return () => {
     //   second
     // }
-  }, [dispatch]);
+  }, [dispatch, success]);
 
   return (
     <div>
@@ -58,15 +55,23 @@ const DashboardScreen = () => {
         <div className='pb-5 border-b-2 border-gray-100'>
           <div className='pl-5 text-2xl text-yellow-500'>Recent reviews</div>
         </div>
-
+        {error && <Alert>{error}</Alert>}
         {loading ? (
           <Spinner />
         ) : (
-          <div className='grid gap-4 px-10 py-5 pt-3 lg:grid-cols-2 '>
-            {reviews.map((review) => (
-              <Review review={review} key={review._id} />
-            ))}
-          </div>
+          <>
+            {reviews.length ? (
+              <div className='grid gap-4 px-10 py-5 pt-3 lg:grid-cols-2 '>
+                {reviews.map((review) => (
+                  <Review review={review} key={review._id} />
+                ))}
+              </div>
+            ) : (
+              <div className='flex items-center justify-center w-full h-40 text-lg '>
+                <div>You have not reviewed any college!!!</div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

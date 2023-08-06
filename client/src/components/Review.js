@@ -12,7 +12,7 @@ const Review = ({
       <div>Date</div>
       <div className='col-span-3 font-bold'>{title}</div>
 
-      <div className='col-span-3 truncate'>{description}</div>
+      <div className='col-span-3 line-clamp-3'>{description}</div>
     </div>
   );
 };

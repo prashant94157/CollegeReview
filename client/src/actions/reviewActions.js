@@ -23,7 +23,13 @@ const getUserReviews = () => async (dispatch, getState) => {
 
     const { data } = await axios.get('/api/v1/reviews', config);
 
-    localStorage.setItem('userReviews', JSON.stringify(data));
+    localStorage.setItem(
+      'userReviews',
+      JSON.stringify({
+        ...data,
+        success: true,
+      })
+    );
 
     dispatch({
       type: GET_USER_REVIEWS_SUCCESS,

@@ -22,14 +22,17 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
 
 const userReviewsFromStorage = localStorage.getItem('userReviews')
   ? JSON.parse(localStorage.getItem('userReviews'))
-  : null;
+  : { reviews: [] };
 
 const initialState = {
   userLogin: {
     userInfo: userInfoFromStorage,
   },
   userReviews: {
-    reviews: userReviewsFromStorage,
+    reviews: userReviewsFromStorage.reviews,
+    page: userReviewsFromStorage.page,
+    pages: userReviewsFromStorage.pages,
+    success: userReviewsFromStorage.success,
   },
 };
 

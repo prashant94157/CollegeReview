@@ -42,11 +42,8 @@ const Header = () => {
             Colleges
           </Link>
         </div>
-        <div>
-          <button
-            className='hover:border-b-2 hover:text-[#fff000] hover:border-b-[#fff000]'
-            onClick={onClick}
-          >
+        <div className=''>
+          <button className='hover:animate-pulse' onClick={onClick}>
             Logout
           </button>
         </div>

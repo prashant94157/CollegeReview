@@ -46,8 +46,8 @@ const App = () => {
 
   const variants = {
     default: {
-      x: mousePosition.x - 300,
-      y: mousePosition.y - 300,
+      x: mousePosition.x - 250,
+      y: mousePosition.y - 250,
     },
   };
 
@@ -55,7 +55,7 @@ const App = () => {
     <Router>
       <div className='bg-[#181829] text-white font-sans'>
         <motion.div
-          className='w-[600px] h-[600px] rounded-full fixed left-0 top-0 z-10 bg-gradient-to-br to-[#647dee] from-[#7f53ac]'
+          className='w-[500px] h-[500px] rounded-full fixed left-0 top-0 z-10 bg-gradient-to-br to-[#647dee] from-[#7f53ac]'
           variants={variants}
           animate='default'
           transition={{ duration: 1 }}

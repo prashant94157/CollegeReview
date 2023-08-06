@@ -9,6 +9,7 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
 } from '../constants/userConstants';
+import { GET_USER_REVIEWS_RESET } from '../constants/reviewConstants';
 
 const login = (email, password) => async (dispatch) => {
   try {
@@ -92,9 +93,14 @@ const register =
 const logout = () => async (dispatch) => {
   try {
     localStorage.removeItem('userInfo');
+    localStorage.removeItem('userReviews');
 
     dispatch({
       type: USER_LOGOUT,
+    });
+
+    dispatch({
+      type: GET_USER_REVIEWS_RESET,
     });
   } catch (error) {}
 };
