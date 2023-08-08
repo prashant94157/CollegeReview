@@ -8,12 +8,15 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
 import { userReviewsReducer } from './reducers/reviewReducers';
+import { planListReducer } from './reducers/planReducers';
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
 
   userReviews: userReviewsReducer,
+
+  planList: planListReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
@@ -22,7 +25,15 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
 
 const userReviewsFromStorage = localStorage.getItem('userReviews')
   ? JSON.parse(localStorage.getItem('userReviews'))
-  : { reviews: [] };
+  : { reviews: [], success: false };
+
+const now = new Date();
+
+const planListFromStorage =
+  localStorage.getItem('plans') &&
+  JSON.parse(localStorage.getItem('plans')).expiry > now.getTime()
+    ? JSON.parse(localStorage.getItem('plans'))
+    : { plans: [], success: false };
 
 const initialState = {
   userLogin: {
@@ -33,6 +44,9 @@ const initialState = {
     page: userReviewsFromStorage.page,
     pages: userReviewsFromStorage.pages,
     success: userReviewsFromStorage.success,
+  },
+  planList: {
+    ...planListFromStorage,
   },
 };
 

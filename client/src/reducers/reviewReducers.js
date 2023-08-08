@@ -11,7 +11,7 @@ const userReviewsReducer = (
 ) => {
   switch (type) {
     case GET_USER_REVIEWS_FAIL:
-      return {};
+      return { ...state, success: true, error: payload, loading: false };
 
     case GET_USER_REVIEWS_REQUEST:
       return {

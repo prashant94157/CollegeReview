@@ -79,8 +79,16 @@ const getPlans = asyncHandler(async (req, res) => {
   const pageSize = 5;
   const page = Number(req.query.pageNumber) || 1;
 
-  const count = await Plan.count({});
-  const plans = await Plan.find({})
+  const count = await Plan.count({
+    planType: {
+      $eq: 'not-free',
+    },
+  });
+  const plans = await Plan.find({
+    planType: {
+      $eq: 'not-free',
+    },
+  })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
   res.json({ plans, page, pages: Math.ceil(count / pageSize) });
