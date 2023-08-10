@@ -74,7 +74,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 });
 
 // @desc    Update user profile
-// @route   PUT /api/v1/users/profile
+// @route   PUT /api/v1/users/:id
 // @access  Private(user)
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
@@ -155,14 +155,26 @@ const getUserById = asyncHandler(async (req, res) => {
 
 // @desc    Update user
 // @route   PUT /api/v1/users/:id
-// @access  Private(Admin)
+// @access  Private(user)
 const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 
-  if (user) {
+  if (
+    user &&
+    (req.user.userType === 'admin' || req.user._id.equals(req.params.id))
+  ) {
     user.name = req.body.name || user.name;
-    user.email = req.body.email || user.email;
-    user.userType = req.body.userType;
+    if (req.body.email) {
+      const user2 = await User.findOne({ email: req.body.email });
+      if (user2 && !user2._id.equals(user._id)) {
+        res.status(404);
+        throw new Error('Email already exits');
+      }
+      user.email = req.body.email;
+    }
+    user.password = req.body.password || user.password;
+    if (req.user.userType === 'admin')
+      user.userType = req.body.userType || user.userType;
 
     const updatedUser = await user.save();
 
@@ -171,6 +183,7 @@ const updateUser = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       userType: updatedUser.userType,
+      token: generateToken(updatedUser._id),
     });
   } else {
     res.status(404);

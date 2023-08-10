@@ -29,7 +29,7 @@ router
   .route('/:id')
   .delete(protect, admin, deleteUser)
   .get(protect, reviewer, getUserById)
-  .put(protect, admin, updateUser);
+  .put(protect, updateUser);
 
 router.patch('/:id/plans/:plan_id', protect, reviewer, updateUserSubscription);
 

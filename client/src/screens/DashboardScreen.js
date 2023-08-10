@@ -27,6 +27,8 @@ const DashboardScreen = () => {
     // }
   }, [dispatch, success]);
 
+  const deleteAccount = () => {};
+
   return (
     <div>
       <div className='py-10 text-6xl font-bold text-center text-yellow-500'>
@@ -49,6 +51,27 @@ const DashboardScreen = () => {
             </div>
           </dl>
         </div>
+      </div>
+
+      <div className='flex justify-around mb-6 text-2xl'>
+        <Link
+          to={`/users/${userInfo._id}/edit`}
+          className='font-semibold px-3.5 py-2.5 text-yellow-300 rounded-md shadow-md hover:bg-yellow-300 hover:opacity-90 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-300'
+        >
+          Edit
+        </Link>
+        <button
+          onClick={deleteAccount}
+          className='font-semibold px-3.5 py-2.5 text-yellow-300 rounded-md shadow-md hover:bg-yellow-300 hover:opacity-90 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-300'
+        >
+          Delete Account
+        </button>
+        <Link
+          to={`/colleges`}
+          className='font-semibold px-3.5 py-2.5 text-yellow-300 rounded-md shadow-md hover:bg-yellow-300 hover:opacity-90 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-300'
+        >
+          Add a review
+        </Link>
       </div>
 
       <div className='px-10 pb-10 lg:px-40'>

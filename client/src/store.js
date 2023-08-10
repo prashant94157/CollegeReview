@@ -6,15 +6,21 @@ import {
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
+import {
+  profileUpdateReducer,
+  userLoginReducer,
+  userProfileReducer,
+  userRegisterReducer,
+} from './reducers/userReducers';
 import { userReviewsReducer } from './reducers/reviewReducers';
 import { planListReducer } from './reducers/planReducers';
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
-
+  userProfile: userProfileReducer,
   userReviews: userReviewsReducer,
+  profileUpdate: profileUpdateReducer,
 
   planList: planListReducer,
 });
