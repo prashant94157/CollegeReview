@@ -15,26 +15,13 @@ const createCollege = asyncHandler(async (req, res) => {
     throw new Error('College already exists');
   }
 
-  let college;
-  if (req.user.userType === 'user') {
-    college = await College.create({
-      name,
-      city,
-      state,
-      country,
-      createdBy: req.user._id,
-    });
-  } else {
-    college = await College.create({
-      name,
-      city,
-      state,
-      country,
-      createdBy: req.user._id,
-      isApproved: true,
-      approvedBy: req.user._id,
-    });
-  }
+  let college = await College.create({
+    name,
+    city,
+    state,
+    country,
+    createdBy: req.user._id,
+  });
 
   if (college) {
     res.status(201).json({
@@ -127,14 +114,24 @@ const deleteCollege = asyncHandler(async (req, res) => {
 // @route   GET /api/v1/colleges
 // @access  private(subscribed User, reviewer, admin)
 const getApprovedColleges = asyncHandler(async (req, res) => {
-  const pageSize = 5;
-  const page = Number(req.query.pageNumber) || 1;
+  const pageSize = 10;
+  const page = Number(req.query.pagenumber) || 1;
 
-  const options = {
-    isApproved: {
-      $eq: true,
-    },
-  };
+  const options = req.query.keyword
+    ? {
+        isApproved: {
+          $eq: true,
+        },
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {
+        isApproved: {
+          $eq: true,
+        },
+      };
 
   const count = await College.count({ ...options });
   const colleges = await College.find({ ...options })

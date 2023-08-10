@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Alert from '../components/Alert';
+import { createCollege } from '../actions/collegeActions';
+import { useDispatch, useSelector } from 'react-redux';
+import Spinner from '../components/Spinner';
+import { COLLEGE_CREATE_RESET } from '../constants/collegeConstant';
 
 const CollegeCreateEditScreen = () => {
   const [formData, setFormData] = useState({
@@ -18,12 +22,31 @@ const CollegeCreateEditScreen = () => {
     });
   };
 
+  const collegeCreate = useSelector((state) => state.collegeCreate);
+  const { loading, success, collegeId, error } = collegeCreate;
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (success) {
+      dispatch({
+        type: COLLEGE_CREATE_RESET,
+      });
+      navigate(`/colleges/${collegeId}`);
+    }
+  }, [collegeId, dispatch, navigate, success]);
+
   const onSubmit = (e) => {
     e.preventDefault();
+    dispatch(createCollege({ name, state, country, city }));
   };
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <div className='min-h-[50vh]'>
+      {error && <Alert>{error}</Alert>}
       <div className='flex flex-col justify-center flex-1 px-6 min-h-[95vh] lg:px-8'>
         <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
           <h2 className='text-3xl font-bold leading-9 tracking-tight text-center'>

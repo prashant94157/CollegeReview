@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Review from '../components/Review';
+import College from '../components/College';
 
 const CollegeScreen = () => {
   return (
@@ -13,7 +14,7 @@ const CollegeScreen = () => {
           <dl className='divide-y divide-gray-100'>
             <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
               <dt className='text-sm font-medium leading-6'>Full name</dt>
-              <dd className='mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0'>
+              <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
                 Margot Foster
               </dd>
             </div>
@@ -21,13 +22,13 @@ const CollegeScreen = () => {
               <dt className='text-sm font-medium leading-6 '>
                 Application for
               </dt>
-              <dd className='mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0'>
+              <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
                 Backend Developer
               </dd>
             </div>
             <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
               <dt className='text-sm font-medium leading-6 '>Email address</dt>
-              <dd className='mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0'>
+              <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
                 margotfoster@example.com
               </dd>
             </div>
@@ -35,13 +36,13 @@ const CollegeScreen = () => {
               <dt className='text-sm font-medium leading-6 '>
                 Salary expectation
               </dt>
-              <dd className='mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0'>
+              <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
                 $120,000
               </dd>
             </div>
             <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
               <dt className='text-sm font-medium leading-6 '>About</dt>
-              <dd className='mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0'>
+              <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
                 Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim
                 incididunt cillum culpa consequat. Excepteur qui ipsum aliquip
                 consequat sint. Sit id mollit nulla mollit nostrud in ea officia
@@ -59,8 +60,8 @@ const CollegeScreen = () => {
         </div>
 
         <div className='grid gap-4 px-10 py-5 pt-3 lg:grid-cols-2 '>
-          <Review data='' />
-          <Review />
+          <College data='' />
+          <College />
         </div>
       </div>
     </div>

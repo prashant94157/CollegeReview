@@ -15,6 +15,10 @@ import {
 } from './reducers/userReducers';
 import { userReviewsReducer } from './reducers/reviewReducers';
 import { planListReducer } from './reducers/planReducers';
+import {
+  collegeCreateReducer,
+  collegeListReducer,
+} from './reducers/collegeReducers';
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -25,6 +29,9 @@ const reducer = combineReducers({
   userDelete: userDeleteReducer,
 
   planList: planListReducer,
+
+  collegeCreate: collegeCreateReducer,
+  collegeList: collegeListReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

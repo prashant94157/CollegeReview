@@ -36,7 +36,7 @@ const DashboardScreen = () => {
     if (deleteSuccess) {
       navigate('/');
     }
-  }, [dispatch, success]);
+  }, [dispatch, success, deleteSuccess, navigate]);
 
   const deleteAccount = () => {
     if (window.confirm('Are you sure ?')) dispatch(deleteUser(userInfo._id));
