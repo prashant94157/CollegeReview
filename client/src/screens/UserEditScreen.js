@@ -5,8 +5,8 @@ import Alert from '../components/Alert';
 import Spinner from '../components/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { getUserProfile, updateProfile } from '../actions/userActions';
-import { USER_PROFILE_RESET } from '../constants/userConstants';
+import { getUserProfile, updateUser } from '../actions/userActions';
+import { USER_EDIT_RESET } from '../constants/userConstants';
 
 const UserEditScreen = () => {
   const userLogin = useSelector((state) => state.userLogin);
@@ -33,7 +33,7 @@ const UserEditScreen = () => {
   useEffect(() => {
     console.log('useEffect re rendered');
     if (success) {
-      dispatch({ type: USER_PROFILE_RESET });
+      dispatch({ type: USER_EDIT_RESET });
       navigate('/dashboard');
     } else if (userInfo._id === userId) {
       setFormData({ ...formData, name: userInfo.name, email: userInfo.email });
@@ -57,7 +57,7 @@ const UserEditScreen = () => {
     if (password !== confirmPassword) {
       setMessage('Passwords are not same');
     } else {
-      dispatch(updateProfile({ userId, email, name, password }));
+      dispatch(updateUser({ userId, email, name, password }));
     }
   };
 

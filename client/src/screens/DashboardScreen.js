@@ -3,17 +3,28 @@ import { Link, useNavigate } from 'react-router-dom';
 import Review from '../components/Review';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserReviews } from '../actions/reviewActions';
+import { deleteUser, logout } from '../actions/userActions';
 import Spinner from '../components/Spinner';
 import Alert from '../components/Alert';
+import {
+  USER_DELETE_FAIL,
+  USER_DELETE_RESET,
+} from '../constants/userConstants';
 
 const DashboardScreen = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  const { name, email } = userInfo;
 
   const userReviews = useSelector((state) => state.userReviews);
   const { loading, reviews, error, success } = userReviews;
 
-  const { name, email } = userInfo;
+  const userDelete = useSelector((state) => state.userDelete);
+  const {
+    loading: deleteLoading,
+    error: deleteError,
+    success: deleteSuccess,
+  } = userDelete;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -22,36 +33,43 @@ const DashboardScreen = () => {
     if (!success) {
       dispatch(getUserReviews());
     }
-    // return () => {
-    //   second
-    // }
+    if (deleteSuccess) {
+      navigate('/');
+    }
   }, [dispatch, success]);
 
-  const deleteAccount = () => {};
+  const deleteAccount = () => {
+    if (window.confirm('Are you sure ?')) dispatch(deleteUser(userInfo._id));
+  };
 
   return (
     <div>
       <div className='py-10 text-6xl font-bold text-center text-yellow-500'>
         Dashboard
       </div>
-      <div className='px-20 lg:px-40'>
-        <div className='border-gray-100'>
-          <dl className='divide-y divide-gray-100'>
-            <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-              <dt className='text-sm font-medium leading-6'>Full name</dt>
-              <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
-                {name}
-              </dd>
-            </div>
-            <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-              <dt className='text-sm font-medium leading-6 '>Email</dt>
-              <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
-                {email}
-              </dd>
-            </div>
-          </dl>
+      {deleteError && <Alert>{deleteError}</Alert>}
+      {deleteLoading ? (
+        <Spinner />
+      ) : (
+        <div className='px-20 lg:px-40'>
+          <div className='border-gray-100'>
+            <dl className='divide-y divide-gray-100'>
+              <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                <dt className='text-sm font-medium leading-6'>Full name</dt>
+                <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
+                  {name}
+                </dd>
+              </div>
+              <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                <dt className='text-sm font-medium leading-6 '>Email</dt>
+                <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
+                  {email}
+                </dd>
+              </div>
+            </dl>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className='flex justify-around mb-6 text-2xl'>
         <Link

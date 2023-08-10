@@ -1,18 +1,22 @@
 import {
-  PROFILE_UPDATE_FAIL,
-  PROFILE_UPDATE_REQUEST,
-  PROFILE_UPDATE_SUCCESS,
+  USER_UPDATE_FAIL,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
-  USER_PROFILE_FAIL,
-  USER_PROFILE_REQUEST,
-  USER_PROFILE_RESET,
-  USER_PROFILE_SUCCESS,
+  USER_EDIT_FAIL,
+  USER_EDIT_REQUEST,
+  USER_EDIT_RESET,
+  USER_EDIT_SUCCESS,
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_DELETE_REQUEST,
+  USER_DELETE_SUCCESS,
+  USER_DELETE_FAIL,
+  USER_DELETE_RESET,
 } from '../constants/userConstants';
 
 const userLoginReducer = (state = {}, { type, payload }) => {
@@ -58,16 +62,16 @@ const userRegisterReducer = (state = {}, { type, payload }) => {
 
 const userProfileReducer = (state = {}, { type, payload }) => {
   switch (type) {
-    case USER_PROFILE_REQUEST:
+    case USER_EDIT_REQUEST:
       return { ...state, loading: true };
 
-    case USER_PROFILE_SUCCESS:
+    case USER_EDIT_SUCCESS:
       return { ...state, loading: false, profile: payload };
 
-    case USER_PROFILE_FAIL:
+    case USER_EDIT_FAIL:
       return { ...state, loading: false, error: payload };
 
-    case USER_PROFILE_RESET:
+    case USER_EDIT_RESET:
       return {};
 
     default:
@@ -80,16 +84,32 @@ const profileUpdateReducer = (
   { type, payload }
 ) => {
   switch (type) {
-    case PROFILE_UPDATE_REQUEST:
+    case USER_UPDATE_REQUEST:
       return { ...state, loading: true };
 
-    case PROFILE_UPDATE_SUCCESS:
+    case USER_UPDATE_SUCCESS:
       return { ...state, loading: false, success: true };
 
-    case PROFILE_UPDATE_FAIL:
+    case USER_UPDATE_FAIL:
       return { ...state, loading: false, error: payload };
 
-    case USER_PROFILE_RESET:
+    default:
+      return state;
+  }
+};
+
+const userDeleteReducer = (state = { success: false }, { type, payload }) => {
+  switch (type) {
+    case USER_DELETE_REQUEST:
+      return { ...state, loading: true };
+
+    case USER_DELETE_SUCCESS:
+      return { ...state, loading: false, success: true };
+
+    case USER_DELETE_FAIL:
+      return { ...state, loading: false, error: payload };
+
+    case USER_DELETE_RESET:
       return { success: false };
 
     default:
@@ -102,4 +122,5 @@ export {
   userRegisterReducer,
   userProfileReducer,
   profileUpdateReducer,
+  userDeleteReducer,
 };

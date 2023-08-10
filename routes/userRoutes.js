@@ -27,7 +27,7 @@ router.get('/', protect, reviewer, getUsers);
 
 router
   .route('/:id')
-  .delete(protect, admin, deleteUser)
+  .delete(protect, deleteUser)
   .get(protect, reviewer, getUserById)
   .put(protect, updateUser);
 

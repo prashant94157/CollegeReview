@@ -1,19 +1,23 @@
 import axios from 'axios';
 
 import {
-  PROFILE_UPDATE_FAIL,
-  PROFILE_UPDATE_REQUEST,
-  PROFILE_UPDATE_SUCCESS,
+  USER_UPDATE_FAIL,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
-  USER_PROFILE_FAIL,
-  USER_PROFILE_REQUEST,
-  USER_PROFILE_SUCCESS,
+  USER_EDIT_FAIL,
+  USER_EDIT_REQUEST,
+  USER_EDIT_SUCCESS,
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_DELETE_REQUEST,
+  USER_DELETE_FAIL,
+  USER_DELETE_SUCCESS,
+  USER_DELETE_RESET,
 } from '../constants/userConstants';
 import { GET_USER_REVIEWS_RESET } from '../constants/reviewConstants';
 
@@ -108,13 +112,17 @@ const logout = () => async (dispatch) => {
     dispatch({
       type: GET_USER_REVIEWS_RESET,
     });
+
+    dispatch({
+      type: USER_DELETE_RESET,
+    });
   } catch (error) {}
 };
 
 const getUserProfile = (id) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: USER_PROFILE_REQUEST,
+      type: USER_EDIT_REQUEST,
     });
 
     const {
@@ -130,12 +138,12 @@ const getUserProfile = (id) => async (dispatch, getState) => {
     const { data } = await axios.get(`/api/v1/users/${id}`, config);
 
     dispatch({
-      type: USER_PROFILE_SUCCESS,
+      type: USER_EDIT_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: USER_PROFILE_FAIL,
+      type: USER_EDIT_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
@@ -144,19 +152,17 @@ const getUserProfile = (id) => async (dispatch, getState) => {
   }
 };
 
-const updateProfile =
+const updateUser =
   ({ userId, email, password, name }) =>
   async (dispatch, getState) => {
     try {
       dispatch({
-        type: PROFILE_UPDATE_REQUEST,
+        type: USER_UPDATE_REQUEST,
       });
 
       const {
         userLogin: { userInfo },
       } = getState();
-
-      console.log(userId, email, password, name);
 
       const config = {
         headers: {
@@ -180,11 +186,11 @@ const updateProfile =
       }
 
       dispatch({
-        type: PROFILE_UPDATE_SUCCESS,
+        type: USER_UPDATE_SUCCESS,
       });
     } catch (error) {
       dispatch({
-        type: PROFILE_UPDATE_FAIL,
+        type: USER_UPDATE_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message
@@ -193,4 +199,39 @@ const updateProfile =
     }
   };
 
-export { login, register, logout, getUserProfile, updateProfile };
+const deleteUser = (userId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_DELETE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Content-Type': 'application/json',
+      },
+    };
+
+    await axios.delete(`/api/v1/users/${userId}`, config);
+
+    dispatch({
+      type: USER_DELETE_SUCCESS,
+    });
+
+    dispatch(logout());
+  } catch (error) {
+    dispatch({
+      type: USER_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export { login, register, logout, getUserProfile, updateUser, deleteUser };

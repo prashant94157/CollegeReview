@@ -8,6 +8,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import {
   profileUpdateReducer,
+  userDeleteReducer,
   userLoginReducer,
   userProfileReducer,
   userRegisterReducer,
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   userProfile: userProfileReducer,
   userReviews: userReviewsReducer,
   profileUpdate: profileUpdateReducer,
+  userDelete: userDeleteReducer,
 
   planList: planListReducer,
 });

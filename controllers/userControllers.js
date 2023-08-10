@@ -74,7 +74,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 });
 
 // @desc    Update user profile
-// @route   PUT /api/v1/users/:id
+// @route   PUT /api/v1/users/profile
 // @access  Private(user)
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
@@ -126,11 +126,14 @@ const getUsers = asyncHandler(async (req, res) => {
 
 // @desc    Delete user
 // @route   DELETE /api/v1/users/:id
-// @access  Private(Admin)
+// @access  Private(user)
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 
-  if (user) {
+  if (
+    user &&
+    (req.user.userType === 'admin' || req.user._id.equals(req.params.id))
+  ) {
     await user.deleteOne();
     res.json({ message: 'User removed successfully!!!' });
   } else {
