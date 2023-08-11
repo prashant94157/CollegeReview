@@ -15,7 +15,7 @@ const CollegeScreen = () => {
   const { userInfo } = userLogin;
   useEffect(() => {
     if (!college || college._id !== id) dispatch(getCollegeByID(id));
-  }, [dispatch, id]);
+  }, [dispatch, college, id]);
 
   return (
     <div>
