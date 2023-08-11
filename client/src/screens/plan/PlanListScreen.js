@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import Plan from '../../components/Plan';
 import { useDispatch, useSelector } from 'react-redux';
+
+import Plan from '../../components/Plan';
 import { getPlansList } from '../../actions/planActions';
 import Alert from '../../components/Alert';
 import Spinner from '../../components/Spinner';

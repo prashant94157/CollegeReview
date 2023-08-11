@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Review from '../../components/Review';
 import { useDispatch, useSelector } from 'react-redux';
+
+import Review from '../../components/Review';
 import { getUserReviews } from '../../actions/reviewActions';
 import { deleteUser, logout } from '../../actions/userActions';
 import Spinner from '../../components/Spinner';

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
+
 import Review from '../../components/Review';
 import { getCollegeByID } from '../../actions/collegeActions';
 import Spinner from '../../components/Spinner';

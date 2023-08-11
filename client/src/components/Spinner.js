@@ -1,5 +1,6 @@
 import React from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
+
 import first from '../assets/first.json';
 import second from '../assets/second.json';
 import third from '../assets/third.json';

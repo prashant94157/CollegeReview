@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+
 import College from '../../components/College';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../../components/Spinner';

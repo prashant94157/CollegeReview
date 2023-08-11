@@ -72,12 +72,12 @@ const App = () => {
               <Route path='/register' element={<RegisterScreen />} />
 
               <Route
-                path='/users/:id/edit'
-                element={<PrivateRoute component={UserEditScreen} />}
-              />
-              <Route
                 path='/users'
                 element={<PrivateRoute component={UserListScreen} />}
+              />
+              <Route
+                path='/users/:id/edit'
+                element={<PrivateRoute component={UserEditScreen} />}
               />
               <Route
                 path='/users/:id'
@@ -106,12 +106,12 @@ const App = () => {
                 element={<PrivateRoute component={ReviewCreateScreen} />}
               />
               <Route
-                path='/colleges/:id/reviews/:id/edit'
-                element={<PrivateRoute component={ReviewEditScreen} />}
-              />
-              <Route
                 path='/colleges/:id/reviews'
                 element={<PrivateRoute component={ReviewListScreen} />}
+              />
+              <Route
+                path='/colleges/:id/reviews/:id/edit'
+                element={<PrivateRoute component={ReviewEditScreen} />}
               />
               <Route
                 path='/colleges/:id/reviews/:id'

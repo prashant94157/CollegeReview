@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import {
   REVIEWS_DETAILS_FAIL,
   REVIEWS_DETAILS_REQUEST,

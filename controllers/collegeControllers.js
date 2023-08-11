@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler';
+
 import College from '../models/collegeModel.js';
 import Review from '../models/reviewModel.js';
 

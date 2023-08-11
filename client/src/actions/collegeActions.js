@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import {
   COLLEGE_CREATE_FAIL,
   COLLEGE_CREATE_REQUEST,
