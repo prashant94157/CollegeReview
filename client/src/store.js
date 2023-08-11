@@ -18,6 +18,7 @@ import { planListReducer } from './reducers/planReducers';
 import {
   collegeCreateReducer,
   collegeListReducer,
+  collegeProfileReducer,
 } from './reducers/collegeReducers';
 
 const reducer = combineReducers({
@@ -32,6 +33,7 @@ const reducer = combineReducers({
 
   collegeCreate: collegeCreateReducer,
   collegeList: collegeListReducer,
+  collegeProfile: collegeProfileReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

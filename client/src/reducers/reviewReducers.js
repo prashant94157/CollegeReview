@@ -1,8 +1,8 @@
 import {
-  GET_USER_REVIEWS_FAIL,
-  GET_USER_REVIEWS_REQUEST,
-  GET_USER_REVIEWS_RESET,
-  GET_USER_REVIEWS_SUCCESS,
+  REVIEWS_DETAILS_FAIL,
+  REVIEWS_DETAILS_REQUEST,
+  REVIEWS_DETAILS_RESET,
+  REVIEWS_DETAILS_SUCCESS,
 } from '../constants/reviewConstants';
 
 const userReviewsReducer = (
@@ -10,16 +10,16 @@ const userReviewsReducer = (
   { type, payload }
 ) => {
   switch (type) {
-    case GET_USER_REVIEWS_FAIL:
+    case REVIEWS_DETAILS_FAIL:
       return { ...state, success: true, error: payload, loading: false };
 
-    case GET_USER_REVIEWS_REQUEST:
+    case REVIEWS_DETAILS_REQUEST:
       return {
         ...state,
         loading: true,
       };
 
-    case GET_USER_REVIEWS_SUCCESS:
+    case REVIEWS_DETAILS_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -29,7 +29,7 @@ const userReviewsReducer = (
         success: true,
       };
 
-    case GET_USER_REVIEWS_RESET:
+    case REVIEWS_DETAILS_RESET:
       return { reviews: [], success: false };
 
     default:

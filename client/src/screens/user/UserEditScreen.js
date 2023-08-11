@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import Alert from '../components/Alert';
-import Spinner from '../components/Spinner';
+import Alert from '../../components/Alert';
+import Spinner from '../../components/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { getUserProfile, updateUser } from '../actions/userActions';
-import { USER_EDIT_RESET } from '../constants/userConstants';
+import { getUserProfile, updateUser } from '../../actions/userActions';
+import { USER_EDIT_RESET } from '../../constants/userConstants';
 
 const UserEditScreen = () => {
   const userLogin = useSelector((state) => state.userLogin);

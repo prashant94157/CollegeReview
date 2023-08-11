@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import Plan from '../components/Plan';
+import Plan from '../../components/Plan';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPlansList } from '../actions/planActions';
-import Alert from '../components/Alert';
-import Spinner from '../components/Spinner';
+import { getPlansList } from '../../actions/planActions';
+import Alert from '../../components/Alert';
+import Spinner from '../../components/Spinner';
 
 const PlanListScreen = () => {
   const dispatch = useDispatch();

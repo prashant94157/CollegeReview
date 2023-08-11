@@ -2,10 +2,11 @@ import React from 'react';
 
 const Review = ({
   review: { college, title, rating, description, degree },
+  showCollege,
 }) => {
   return (
     <div className='grid grid-cols-3 gap-2 px-4 shadow-md py-7 rounded-2xl'>
-      <div className='col-span-2'>{college.name}</div>
+      <div className='col-span-2'>{college.name || 'Prashant Maurya'}</div>
       <div>&#9733;&#9733;&#9733;&#9733;&#9733;</div>
 
       <div className='col-span-2'>{degree}</div>

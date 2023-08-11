@@ -1,15 +1,27 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
-import Alert from '../components/Alert';
+import Alert from '../../components/Alert';
+import Spinner from '../../components/Spinner';
+import { login } from '../../actions/userActions';
 
-const PlanCreateEditScreen = () => {
+const LoginScreen = () => {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo, loading, error } = userLogin;
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  if (userInfo) {
+    navigate('/dashboard');
+  }
+
   const [formData, setFormData] = useState({
-    price: '',
-    days: '',
-    planType: '',
+    email: '',
+    password: '',
   });
-  const { price, days, planType } = formData;
+  const { email, password } = formData;
   const onChange = (e) => {
     setFormData({
       ...formData,
@@ -19,14 +31,19 @@ const PlanCreateEditScreen = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log(email, password);
+    dispatch(login(email, password));
   };
 
-  return (
-    <div className='min-h-[50vh]'>
+  return loading ? (
+    <Spinner />
+  ) : (
+    <div className='h-screen'>
+      {error && <Alert>{error}</Alert>}
       <div className='flex flex-col justify-center flex-1 px-6 min-h-[95vh] lg:px-8'>
         <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-          <h2 className='text-3xl font-bold leading-9 tracking-tight text-center'>
-            Create Plan
+          <h2 className='text-2xl font-bold leading-9 tracking-tight text-center'>
+            Sign in
           </h2>
         </div>
 
@@ -34,38 +51,19 @@ const PlanCreateEditScreen = () => {
           <form className='space-y-6' onSubmit={onSubmit} method='POST'>
             <div>
               <label
-                htmlFor='price'
+                htmlFor='email'
                 className='block text-sm font-medium leading-6'
               >
-                Price
+                Email address
               </label>
               <div className='mt-2'>
                 <input
-                  id='price'
-                  name='price'
-                  type='number'
-                  value={price}
+                  id='email'
+                  name='email'
+                  type='email'
+                  value={email}
                   onChange={onChange}
-                  required
-                  className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor='days'
-                className='block text-sm font-medium leading-6'
-              >
-                Days
-              </label>
-              <div className='mt-2'>
-                <input
-                  id='days'
-                  name='days'
-                  type='number'
-                  value={days}
-                  onChange={onChange}
+                  autoComplete='email'
                   required
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 />
@@ -75,18 +73,24 @@ const PlanCreateEditScreen = () => {
             <div>
               <div className='flex items-center justify-between'>
                 <label
-                  htmlFor='planType'
+                  htmlFor='password'
                   className='block text-sm font-medium leading-6'
                 >
-                  Plan Type
+                  Password
                 </label>
+                <div className='text-sm'>
+                  <a href='/' className='font-semibold'>
+                    Forgot password?
+                  </a>
+                </div>
               </div>
               <div className='mt-2'>
                 <input
-                  id='planType'
-                  name='planType'
-                  type='text'
-                  value={planType}
+                  id='password'
+                  name='password'
+                  type='password'
+                  autoComplete='current-password'
+                  value={password}
                   onChange={onChange}
                   required
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
@@ -99,14 +103,24 @@ const PlanCreateEditScreen = () => {
                 type='submit'
                 className='flex w-full justify-center rounded-md bg-[#fff000] px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
               >
-                Update
+                Sign in
               </button>
             </div>
           </form>
+
+          <p className='mt-10 text-sm text-center'>
+            Don't have an account?
+            <Link
+              to='/register'
+              className='font-semibold pl-2 hover:text-[#fff000] px-3 leading-6'
+            >
+              Register
+            </Link>
+          </p>
         </div>
       </div>
     </div>
   );
 };
 
-export default PlanCreateEditScreen;
+export default LoginScreen;

@@ -1,13 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Review from '../components/Review';
-import College from '../components/College';
+import Review from '../../components/Review';
 
-const CollegeScreen = () => {
+const PlanScreen = () => {
   return (
     <div>
       <div className='py-10 text-6xl font-bold text-center text-yellow-500'>
-        Bright Way Inter College
+        Plan
       </div>
       <div className='px-20 lg:px-40'>
         <div className='border-gray-100'>
@@ -53,19 +52,8 @@ const CollegeScreen = () => {
           </dl>
         </div>
       </div>
-
-      <div className='px-10 pb-10 lg:px-40'>
-        <div className='pb-5 border-b-2 border-gray-100'>
-          <div className='pl-5 text-2xl text-yellow-500'>Recent reviews</div>
-        </div>
-
-        <div className='grid gap-4 px-10 py-5 pt-3 lg:grid-cols-2 '>
-          <College data='' />
-          <College />
-        </div>
-      </div>
     </div>
   );
 };
 
-export default CollegeScreen;
+export default PlanScreen;

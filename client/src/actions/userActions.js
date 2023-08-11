@@ -19,7 +19,7 @@ import {
   USER_DELETE_SUCCESS,
   USER_DELETE_RESET,
 } from '../constants/userConstants';
-import { GET_USER_REVIEWS_RESET } from '../constants/reviewConstants';
+import { REVIEWS_DETAILS_RESET } from '../constants/reviewConstants';
 
 const login = (email, password) => async (dispatch) => {
   try {
@@ -110,7 +110,7 @@ const logout = () => async (dispatch) => {
     });
 
     dispatch({
-      type: GET_USER_REVIEWS_RESET,
+      type: REVIEWS_DETAILS_RESET,
     });
 
     dispatch({

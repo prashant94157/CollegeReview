@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 const College = ({
   data: {
     name,
@@ -10,6 +10,7 @@ const College = ({
     approvedReviews: reviews,
     totalReviews,
     availableCourses,
+    _id,
   },
 }) => {
   return (
@@ -17,8 +18,14 @@ const College = ({
       <div className='col-span-2'>{name}</div>
       <div>{avgRating}</div>
 
-      <div className='col-span-3'>{`${city}, ${state}, ${country}`}</div>
-      <div className='col-span-3 font-bold'>title</div>
+      <div className='col-span-2'>{`${city}, ${state}, ${country}`}</div>
+      <div>
+        <Link to={`/colleges/${_id}`}>View</Link>
+      </div>
+      <div className='col-span-2 font-bold'>title</div>
+      <div>
+        <Link to={`/colleges/${_id}/edit`}>Edit</Link>
+      </div>
 
       <div className='col-span-3'>{reviews.length}</div>
     </div>

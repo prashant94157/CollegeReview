@@ -3,6 +3,10 @@ import {
   COLLEGE_CREATE_REQUEST,
   COLLEGE_CREATE_RESET,
   COLLEGE_CREATE_SUCCESS,
+  COLLEGE_DETAILS_FAIL,
+  COLLEGE_DETAILS_REQUEST,
+  COLLEGE_DETAILS_RESET,
+  COLLEGE_DETAILS_SUCCESS,
   COLLEGE_LIST_FAIL,
   COLLEGE_LIST_REQUEST,
   COLLEGE_LIST_RESET,
@@ -60,4 +64,23 @@ const collegeListReducer = (
   }
 };
 
-export { collegeCreateReducer, collegeListReducer };
+const collegeProfileReducer = (state = {}, { type, payload }) => {
+  switch (type) {
+    case COLLEGE_DETAILS_REQUEST:
+      return { loading: true };
+
+    case COLLEGE_DETAILS_FAIL:
+      return { loading: false, error: payload };
+
+    case COLLEGE_DETAILS_RESET:
+      return {};
+
+    case COLLEGE_DETAILS_SUCCESS:
+      return { loading: false, college: payload };
+
+    default:
+      return state;
+  }
+};
+
+export { collegeCreateReducer, collegeListReducer, collegeProfileReducer };

@@ -1,58 +1,56 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 
-import Alert from '../components/Alert';
-import Spinner from '../components/Spinner';
-import { register } from '../actions/userActions';
+import Alert from '../../components/Alert';
+import { createCollege } from '../../actions/collegeActions';
+import { useDispatch, useSelector } from 'react-redux';
+import Spinner from '../../components/Spinner';
+import { COLLEGE_CREATE_RESET } from '../../constants/collegeConstant';
 
-const Register = () => {
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo: userInfoLogin } = userLogin;
-
-  const userRegister = useSelector((state) => state.userRegister);
-  const { userInfo, loading, error } = userRegister;
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
+const CollegeCreateScreen = () => {
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    city: '',
+    state: '',
+    country: '',
   });
+  const { name, city, state, country } = formData;
   const onChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
-  const [message, setMessage] = useState(null);
-  const { name, email, password, confirmPassword } = formData;
+
+  const collegeCreate = useSelector((state) => state.collegeCreate);
+  const { loading, success, collegeId, error } = collegeCreate;
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (success) {
+      dispatch({
+        type: COLLEGE_CREATE_RESET,
+      });
+      navigate(`/colleges/${collegeId}`);
+    }
+  }, [collegeId, dispatch, navigate, success]);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
-    } else {
-      dispatch(register({ name, password, email }));
-    }
+    dispatch(createCollege({ name, state, country, city }));
   };
-
-  useEffect(() => {
-    if (userInfoLogin) {
-      navigate('/dashboard');
-    }
-  }, [userInfoLogin, navigate]);
 
   return loading ? (
     <Spinner />
   ) : (
-    <div className='h-screen'>
-      {message && <Alert>{message}</Alert>}
+    <div className='min-h-[50vh]'>
       {error && <Alert>{error}</Alert>}
       <div className='flex flex-col justify-center flex-1 px-6 min-h-[95vh] lg:px-8'>
         <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-          <h2 className='text-2xl font-bold leading-9 tracking-tight text-center'>
-            Create your account
+          <h2 className='text-3xl font-bold leading-9 tracking-tight text-center'>
+            Create College
           </h2>
         </div>
 
@@ -63,7 +61,7 @@ const Register = () => {
                 htmlFor='name'
                 className='block text-sm font-medium leading-6'
               >
-                Name
+                College Name
               </label>
               <div className='mt-2'>
                 <input
@@ -81,19 +79,19 @@ const Register = () => {
 
             <div>
               <label
-                htmlFor='email'
+                htmlFor='city'
                 className='block text-sm font-medium leading-6'
               >
-                Email address
+                City
               </label>
               <div className='mt-2'>
                 <input
-                  id='email'
-                  name='email'
-                  type='email'
-                  value={email}
+                  id='city'
+                  name='city'
+                  type='text'
+                  value={city}
                   onChange={onChange}
-                  autoComplete='email'
+                  autoComplete='city'
                   required
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 />
@@ -101,21 +99,20 @@ const Register = () => {
             </div>
 
             <div>
-              <div className='flex items-center justify-between'>
-                <label
-                  htmlFor='password'
-                  className='block text-sm font-medium leading-6'
-                >
-                  Password
-                </label>
-              </div>
+              <label
+                htmlFor='state'
+                className='block text-sm font-medium leading-6'
+              >
+                State
+              </label>
               <div className='mt-2'>
                 <input
-                  name='password'
-                  type='password'
-                  value={password}
+                  id='state'
+                  name='state'
+                  type='text'
+                  value={state}
                   onChange={onChange}
-                  autoComplete='current-password'
+                  autoComplete='state'
                   required
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 />
@@ -123,49 +120,39 @@ const Register = () => {
             </div>
 
             <div>
-              <div className='flex items-center justify-between'>
-                <label
-                  htmlFor='password'
-                  className='block text-sm font-medium leading-6'
-                >
-                  Confirm Password
-                </label>
-              </div>
+              <label
+                htmlFor='country'
+                className='block text-sm font-medium leading-6'
+              >
+                Country
+              </label>
               <div className='mt-2'>
                 <input
-                  name='confirmPassword'
-                  type='password'
-                  value={confirmPassword}
+                  id='country'
+                  name='country'
+                  type='text'
+                  value={country}
                   onChange={onChange}
-                  autoComplete='current-password'
+                  autoComplete='country'
                   required
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 />
               </div>
             </div>
+
             <div>
               <button
                 type='submit'
                 className='flex w-full justify-center rounded-md bg-[#fff000] px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
               >
-                Register
+                Create
               </button>
             </div>
           </form>
-
-          <p className='mt-10 text-sm text-center'>
-            Already have an account?
-            <Link
-              to='/login'
-              className='font-semibold pl-2 hover:text-[#fff000] px-3 leading-6'
-            >
-              LOGIN
-            </Link>
-          </p>
         </div>
       </div>
     </div>
   );
 };
 
-export default Register;
+export default CollegeCreateScreen;

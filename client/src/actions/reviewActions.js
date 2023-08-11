@@ -1,14 +1,14 @@
 import axios from 'axios';
 import {
-  GET_USER_REVIEWS_FAIL,
-  GET_USER_REVIEWS_REQUEST,
-  GET_USER_REVIEWS_SUCCESS,
+  REVIEWS_DETAILS_FAIL,
+  REVIEWS_DETAILS_REQUEST,
+  REVIEWS_DETAILS_SUCCESS,
 } from '../constants/reviewConstants';
 
 const getUserReviews = () => async (dispatch, getState) => {
   try {
     dispatch({
-      type: GET_USER_REVIEWS_REQUEST,
+      type: REVIEWS_DETAILS_REQUEST,
     });
 
     const {
@@ -32,12 +32,12 @@ const getUserReviews = () => async (dispatch, getState) => {
     );
 
     dispatch({
-      type: GET_USER_REVIEWS_SUCCESS,
+      type: REVIEWS_DETAILS_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: GET_USER_REVIEWS_FAIL,
+      type: REVIEWS_DETAILS_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

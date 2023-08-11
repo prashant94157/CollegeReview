@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import Alert from '../components/Alert';
-import { createCollege } from '../actions/collegeActions';
-import { useDispatch, useSelector } from 'react-redux';
-import Spinner from '../components/Spinner';
-import { COLLEGE_CREATE_RESET } from '../constants/collegeConstant';
+import Alert from '../../components/Alert';
 
-const CollegeCreateEditScreen = () => {
+const ReviewCreateScreen = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    city: '',
-    state: '',
-    country: '',
+    title: '',
+    rating: '',
+    description: '',
+    degree: '',
   });
-  const { name, city, state, country } = formData;
+  const { title, rating, description, degree } = formData;
   const onChange = (e) => {
     setFormData({
       ...formData,
@@ -22,35 +18,16 @@ const CollegeCreateEditScreen = () => {
     });
   };
 
-  const collegeCreate = useSelector((state) => state.collegeCreate);
-  const { loading, success, collegeId, error } = collegeCreate;
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (success) {
-      dispatch({
-        type: COLLEGE_CREATE_RESET,
-      });
-      navigate(`/colleges/${collegeId}`);
-    }
-  }, [collegeId, dispatch, navigate, success]);
-
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(createCollege({ name, state, country, city }));
   };
 
-  return loading ? (
-    <Spinner />
-  ) : (
+  return (
     <div className='min-h-[50vh]'>
-      {error && <Alert>{error}</Alert>}
       <div className='flex flex-col justify-center flex-1 px-6 min-h-[95vh] lg:px-8'>
         <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
           <h2 className='text-3xl font-bold leading-9 tracking-tight text-center'>
-            Create College
+            Create Review
           </h2>
         </div>
 
@@ -58,19 +35,19 @@ const CollegeCreateEditScreen = () => {
           <form className='space-y-6' onSubmit={onSubmit} method='POST'>
             <div>
               <label
-                htmlFor='name'
+                htmlFor='title'
                 className='block text-sm font-medium leading-6'
               >
-                College Name
+                Title
               </label>
               <div className='mt-2'>
                 <input
-                  id='name'
-                  name='name'
+                  id='title'
+                  name='title'
                   type='text'
-                  value={name}
+                  value={title}
                   onChange={onChange}
-                  autoComplete='name'
+                  autoComplete='title'
                   required
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 />
@@ -79,19 +56,19 @@ const CollegeCreateEditScreen = () => {
 
             <div>
               <label
-                htmlFor='city'
+                htmlFor='rating'
                 className='block text-sm font-medium leading-6'
               >
-                City
+                Rating
               </label>
               <div className='mt-2'>
                 <input
-                  id='city'
-                  name='city'
-                  type='text'
-                  value={city}
+                  id='rating'
+                  name='rating'
+                  type='number'
+                  value={rating}
                   onChange={onChange}
-                  autoComplete='city'
+                  autoComplete='rating'
                   required
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 />
@@ -100,19 +77,19 @@ const CollegeCreateEditScreen = () => {
 
             <div>
               <label
-                htmlFor='state'
+                htmlFor='description'
                 className='block text-sm font-medium leading-6'
               >
-                State
+                Description
               </label>
               <div className='mt-2'>
                 <input
-                  id='state'
-                  name='state'
-                  type='text'
-                  value={state}
+                  id='description'
+                  name='description'
+                  type='textarea'
+                  value={description}
                   onChange={onChange}
-                  autoComplete='state'
+                  autoComplete='description'
                   required
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 />
@@ -121,19 +98,19 @@ const CollegeCreateEditScreen = () => {
 
             <div>
               <label
-                htmlFor='country'
+                htmlFor='degree'
                 className='block text-sm font-medium leading-6'
               >
-                Country
+                Degree
               </label>
               <div className='mt-2'>
                 <input
-                  id='country'
-                  name='country'
+                  id='degree'
+                  name='degree'
                   type='text'
-                  value={country}
+                  value={degree}
                   onChange={onChange}
-                  autoComplete='country'
+                  autoComplete='degree'
                   required
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 />
@@ -155,4 +132,4 @@ const CollegeCreateEditScreen = () => {
   );
 };
 
-export default CollegeCreateEditScreen;
+export default ReviewCreateScreen;

@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Review from '../components/Review';
+import Review from '../../components/Review';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserReviews } from '../actions/reviewActions';
-import { deleteUser, logout } from '../actions/userActions';
-import Spinner from '../components/Spinner';
-import Alert from '../components/Alert';
+import { getUserReviews } from '../../actions/reviewActions';
+import { deleteUser, logout } from '../../actions/userActions';
+import Spinner from '../../components/Spinner';
+import Alert from '../../components/Alert';
 import {
   USER_DELETE_FAIL,
   USER_DELETE_RESET,
-} from '../constants/userConstants';
+} from '../../constants/userConstants';
 
 const DashboardScreen = () => {
   const userLogin = useSelector((state) => state.userLogin);

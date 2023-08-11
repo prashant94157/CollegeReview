@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import College from '../components/College';
+import College from '../../components/College';
 import { useDispatch, useSelector } from 'react-redux';
-import Spinner from '../components/Spinner';
-import Alert from '../components/Alert';
-import { getCollegeList } from '../actions/collegeActions';
-import Search from '../components/Search';
+import Spinner from '../../components/Spinner';
+import Alert from '../../components/Alert';
+import { getCollegeList } from '../../actions/collegeActions';
+import Search from '../../components/Search';
 
 const CollegeListScreen = () => {
   let [searchParams, setSearchParams] = useSearchParams();
