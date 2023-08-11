@@ -10,30 +10,57 @@ import {
   userUpdateReducer,
   userDeleteReducer,
   userLoginReducer,
-  userProfileReducer,
+  userDetailsReducer,
   userRegisterReducer,
+  userListReducer,
 } from './reducers/userReducers';
-import { userReviewsReducer } from './reducers/reviewReducers';
-import { planListReducer } from './reducers/planReducers';
+import {
+  reviewCreateReducer,
+  reviewDeleteReducer,
+  reviewDetailsReducer,
+  reviewUpdateReducer,
+  userReviewsReducer,
+} from './reducers/reviewReducers';
+import {
+  planCreateReducer,
+  planDeleteReducer,
+  planDetailsReducer,
+  planListReducer,
+  planUpdateReducer,
+} from './reducers/planReducers';
 import {
   collegeCreateReducer,
   collegeListReducer,
-  collegeProfileReducer,
+  collegeDetailsReducer,
+  collegeUpdateReducer,
+  collegeDeleteReducer,
 } from './reducers/collegeReducers';
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
-  userProfile: userProfileReducer,
+  userDetails: userDetailsReducer,
   userReviews: userReviewsReducer,
   userUpdate: userUpdateReducer,
   userDelete: userDeleteReducer,
+  userList: userListReducer,
+
+  reviewUpdate: reviewUpdateReducer,
+  reviewDelete: reviewDeleteReducer,
+  reviewCreate: reviewCreateReducer,
+  reviewDetails: reviewDetailsReducer,
 
   planList: planListReducer,
+  planCreate: planCreateReducer,
+  planDetails: planDetailsReducer,
+  planUpdate: planUpdateReducer,
+  planDelete: planDeleteReducer,
 
   collegeCreate: collegeCreateReducer,
   collegeList: collegeListReducer,
-  collegeProfile: collegeProfileReducer,
+  collegeDetails: collegeDetailsReducer,
+  collegeUpdate: collegeUpdateReducer,
+  collegeDelete: collegeDeleteReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

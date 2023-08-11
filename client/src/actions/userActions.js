@@ -18,6 +18,9 @@ import {
   USER_DELETE_FAIL,
   USER_DELETE_SUCCESS,
   USER_DELETE_RESET,
+  USER_LIST_REQUEST,
+  USER_LIST_FAIL,
+  USER_LIST_SUCCESS,
 } from '../constants/userConstants';
 import { REVIEW_DETAILS_RESET } from '../constants/reviewConstants';
 
@@ -212,7 +215,6 @@ const deleteUser = (userId) => async (dispatch, getState) => {
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
-        'Content-Type': 'application/json',
       },
     };
 
@@ -234,4 +236,48 @@ const deleteUser = (userId) => async (dispatch, getState) => {
   }
 };
 
-export { login, register, logout, getUserById, updateUser, deleteUser };
+const getUserList = (keyword, pagenumber) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_LIST_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `/api/v1/users?keyword=${keyword}&pagenumber=${pagenumber}`,
+      config
+    );
+
+    dispatch({
+      type: USER_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export {
+  login,
+  register,
+  logout,
+  getUserById,
+  updateUser,
+  deleteUser,
+  getUserList,
+};

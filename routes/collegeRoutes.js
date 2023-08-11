@@ -15,7 +15,6 @@ import {
   deleteReview,
   disapproveReview,
   getApprovedReviews,
-  getReviewById,
   getDisapprovedReviews,
   updateReview,
 } from '../controllers/collegeControllers.js';
@@ -50,7 +49,6 @@ router
   .route('/:id/reviews/:review_id')
   .put(protect, updateReview)
   .delete(protect, deleteReview)
-  .get(protect, subscribed, getReviewById)
   .patch(protect, reviewer, approveReview);
 router
   .route('/:id')

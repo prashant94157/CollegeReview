@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
 import Review from '../../components/Review';
-import { getCollegeByID } from '../../actions/collegeActions';
+import { getCollegeById } from '../../actions/collegeActions';
 import Spinner from '../../components/Spinner';
 import Alert from '../../components/Alert';
 
@@ -15,7 +15,7 @@ const CollegeScreen = () => {
   const { id } = useParams();
   const { userInfo } = userLogin;
   useEffect(() => {
-    if (!college || college._id !== id) dispatch(getCollegeByID(id));
+    if (!college || college._id !== id) dispatch(getCollegeById(id));
   }, [dispatch, college, id]);
 
   return (

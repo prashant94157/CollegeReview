@@ -1,7 +1,12 @@
 import {
   COLLEGE_CREATE_FAIL,
   COLLEGE_CREATE_REQUEST,
+  COLLEGE_CREATE_RESET,
   COLLEGE_CREATE_SUCCESS,
+  COLLEGE_DELETE_FAIL,
+  COLLEGE_DELETE_REQUEST,
+  COLLEGE_DELETE_RESET,
+  COLLEGE_DELETE_SUCCESS,
   COLLEGE_DETAILS_FAIL,
   COLLEGE_DETAILS_REQUEST,
   COLLEGE_DETAILS_RESET,
@@ -10,6 +15,9 @@ import {
   COLLEGE_LIST_REQUEST,
   COLLEGE_LIST_RESET,
   COLLEGE_LIST_SUCCESS,
+  COLLEGE_UPDATE_FAIL,
+  COLLEGE_UPDATE_REQUEST,
+  COLLEGE_UPDATE_SUCCESS,
 } from '../constants/collegeConstant';
 
 const collegeCreateReducer = (state = {}, { type, payload }) => {
@@ -22,6 +30,9 @@ const collegeCreateReducer = (state = {}, { type, payload }) => {
 
     case COLLEGE_CREATE_FAIL:
       return { loading: false, error: payload };
+
+    case COLLEGE_CREATE_RESET:
+      return {};
 
     default:
       return state;
@@ -63,7 +74,7 @@ const collegeListReducer = (
   }
 };
 
-const collegeProfileReducer = (state = {}, { type, payload }) => {
+const collegeDetailsReducer = (state = {}, { type, payload }) => {
   switch (type) {
     case COLLEGE_DETAILS_REQUEST:
       return { loading: true };
@@ -82,4 +93,51 @@ const collegeProfileReducer = (state = {}, { type, payload }) => {
   }
 };
 
-export { collegeCreateReducer, collegeListReducer, collegeProfileReducer };
+const collegeUpdateReducer = (
+  state = { success: false },
+  { type, payload }
+) => {
+  switch (type) {
+    case COLLEGE_UPDATE_REQUEST:
+      return { ...state, loading: true };
+
+    case COLLEGE_UPDATE_SUCCESS:
+      return { ...state, loading: false, success: true };
+
+    case COLLEGE_UPDATE_FAIL:
+      return { ...state, loading: false, error: payload };
+
+    default:
+      return state;
+  }
+};
+
+const collegeDeleteReducer = (
+  state = { success: false },
+  { type, payload }
+) => {
+  switch (type) {
+    case COLLEGE_DELETE_REQUEST:
+      return { ...state, loading: true };
+
+    case COLLEGE_DELETE_SUCCESS:
+      return { ...state, loading: false, success: true };
+
+    case COLLEGE_DELETE_FAIL:
+      return { ...state, loading: false, error: payload };
+
+    case COLLEGE_DELETE_RESET:
+      return { success: false };
+
+    default:
+      return state;
+  }
+};
+
+export {
+  collegeCreateReducer,
+  collegeListReducer,
+  collegeDetailsReducer,
+  collegeDeleteReducer,
+  collegeUpdateReducer,
+};

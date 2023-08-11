@@ -17,6 +17,10 @@ import {
   USER_DELETE_SUCCESS,
   USER_DELETE_FAIL,
   USER_DELETE_RESET,
+  USER_LIST_REQUEST,
+  USER_LIST_SUCCESS,
+  USER_LIST_FAIL,
+  USER_LIST_RESET,
 } from '../constants/userConstants';
 
 const userLoginReducer = (state = {}, { type, payload }) => {
@@ -60,7 +64,7 @@ const userRegisterReducer = (state = {}, { type, payload }) => {
   }
 };
 
-const userProfileReducer = (state = {}, { type, payload }) => {
+const userDetailsReducer = (state = {}, { type, payload }) => {
   switch (type) {
     case USER_DETAILS_REQUEST:
       return { ...state, loading: true };
@@ -114,10 +118,46 @@ const userDeleteReducer = (state = { success: false }, { type, payload }) => {
   }
 };
 
+const userListReducer = (
+  state = { users: [], success: false, search: '' },
+  { type, payload }
+) => {
+  switch (type) {
+    case USER_LIST_REQUEST:
+      return { ...state, loading: true };
+
+    case USER_LIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        page: payload.page,
+        pages: payload.pages,
+        users: payload.users,
+        success: true,
+        search: payload.search,
+      };
+
+    case USER_LIST_FAIL:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        error: payload,
+      };
+
+    case USER_LIST_RESET:
+      return { success: false, users: [], search: '' };
+
+    default:
+      return state;
+  }
+};
+
 export {
   userLoginReducer,
   userRegisterReducer,
-  userProfileReducer,
+  userDetailsReducer,
   userUpdateReducer,
   userDeleteReducer,
+  userListReducer,
 };

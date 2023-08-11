@@ -25,4 +25,27 @@ const getReviews = asyncHandler(async (req, res) => {
   res.json({ reviews, page, pages: Math.ceil(count / pageSize) });
 });
 
-export { getReviews };
+// @desc    read review
+// @route   GET /api/v1/reviews/:id
+// @access  private(admin + reviewer + subscribed User)
+const getReviewById = asyncHandler(async (req, res) => {
+  const review = await Review.findById(req.params.id);
+
+  if (review) {
+    if (
+      req.user.userType !== 'user' || //for admin and reviewer
+      review.createdBy.equals(req.user._id) || // to view own reviews
+      review.isApproved === true // to view only approved reviews
+    ) {
+      res.json(review);
+    } else {
+      res.status(404);
+      throw new Error('You have not enough access to read college!!!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('Review not found!!!');
+  }
+});
+
+export { getReviews, getReviewById };

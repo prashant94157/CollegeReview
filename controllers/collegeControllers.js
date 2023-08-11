@@ -470,30 +470,6 @@ const getDisapprovedReviews = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    read review
-// @route   GET /api/v1/colleges/:id/reviews/:review_id
-// @access  private(admin + reviewer + subscribed User)
-const getReviewById = asyncHandler(async (req, res) => {
-  const college = await College.findById(req.params.id);
-  const review = await Review.findById(req.params.review_id);
-
-  if (college && review) {
-    if (
-      req.user.userType !== 'user' || //for admin and reviewer
-      review.createdBy.equals(req.user._id) || // to view own reviews
-      (college.isApproved === true && review.isApproved === true) // to view only approved reviews
-    ) {
-      res.json(college);
-    } else {
-      res.status(404);
-      throw new Error('You have not enough access to read college!!!');
-    }
-  } else {
-    res.status(404);
-    throw new Error('Review not found!!!');
-  }
-});
-
 // @desc    Approve review
 // @route   PATCH /api/v1/colleges/:id/reviews/:review_id
 // @access  private(admin, reviewer)
@@ -617,7 +593,6 @@ export {
   deleteReview,
   disapproveReview,
   getApprovedReviews,
-  getReviewById,
   getDisapprovedReviews,
   updateReview,
 };

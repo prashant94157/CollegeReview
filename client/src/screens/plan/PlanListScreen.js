@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Plan from '../../components/Plan';
-import { getPlansList } from '../../actions/planActions';
+import { getPlanList } from '../../actions/planActions';
 import Alert from '../../components/Alert';
 import Spinner from '../../components/Spinner';
 
@@ -12,7 +12,7 @@ const PlanListScreen = () => {
   const { error, loading, success, page, pages, plans } = plansList;
 
   useEffect(() => {
-    if (!success) dispatch(getPlansList());
+    if (!success) dispatch(getPlanList());
 
     // return () => {
     //   second;
