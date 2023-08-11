@@ -6,10 +6,10 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
-  USER_EDIT_FAIL,
-  USER_EDIT_REQUEST,
-  USER_EDIT_RESET,
-  USER_EDIT_SUCCESS,
+  USER_DETAILS_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_RESET,
+  USER_DETAILS_SUCCESS,
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
@@ -62,16 +62,16 @@ const userRegisterReducer = (state = {}, { type, payload }) => {
 
 const userProfileReducer = (state = {}, { type, payload }) => {
   switch (type) {
-    case USER_EDIT_REQUEST:
+    case USER_DETAILS_REQUEST:
       return { ...state, loading: true };
 
-    case USER_EDIT_SUCCESS:
+    case USER_DETAILS_SUCCESS:
       return { ...state, loading: false, profile: payload };
 
-    case USER_EDIT_FAIL:
+    case USER_DETAILS_FAIL:
       return { ...state, loading: false, error: payload };
 
-    case USER_EDIT_RESET:
+    case USER_DETAILS_RESET:
       return {};
 
     default:
@@ -79,10 +79,7 @@ const userProfileReducer = (state = {}, { type, payload }) => {
   }
 };
 
-const profileUpdateReducer = (
-  state = { success: false },
-  { type, payload }
-) => {
+const userUpdateReducer = (state = { success: false }, { type, payload }) => {
   switch (type) {
     case USER_UPDATE_REQUEST:
       return { ...state, loading: true };
@@ -121,6 +118,6 @@ export {
   userLoginReducer,
   userRegisterReducer,
   userProfileReducer,
-  profileUpdateReducer,
+  userUpdateReducer,
   userDeleteReducer,
 };

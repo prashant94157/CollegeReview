@@ -1,7 +1,7 @@
 import {
-  PLANS_LIST_FAIL,
-  PLANS_LIST_REQUEST,
-  PLANS_LIST_SUCCESS,
+  PLAN_LIST_FAIL,
+  PLAN_LIST_REQUEST,
+  PLAN_LIST_SUCCESS,
 } from '../constants/planConstant';
 
 const planListReducer = (
@@ -9,10 +9,10 @@ const planListReducer = (
   { type, payload }
 ) => {
   switch (type) {
-    case PLANS_LIST_REQUEST:
+    case PLAN_LIST_REQUEST:
       return { ...state, loading: true };
 
-    case PLANS_LIST_SUCCESS:
+    case PLAN_LIST_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -22,7 +22,7 @@ const planListReducer = (
         success: true,
       };
 
-    case PLANS_LIST_FAIL:
+    case PLAN_LIST_FAIL:
       return {
         ...state,
         loading: false,

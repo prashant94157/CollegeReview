@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Alert from '../../components/Alert';
 import Spinner from '../../components/Spinner';
-import { getUserProfile, updateUser } from '../../actions/userActions';
-import { USER_EDIT_RESET } from '../../constants/userConstants';
+import { getUserById, updateUser } from '../../actions/userActions';
+import { USER_DETAILS_RESET } from '../../constants/userConstants';
 
 const UserEditScreen = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const userProfile = useSelector((state) => state.userProfile);
-  const profileUpdate = useSelector((state) => state.profileUpdate);
+  const userUpdate = useSelector((state) => state.userUpdate);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,21 +25,21 @@ const UserEditScreen = () => {
 
   const { userInfo } = userLogin;
   const { profile, loading, error } = userProfile;
-  const { success, loading: loadingUpdate, error: errorUpdate } = profileUpdate;
+  const { success, loading: loadingUpdate, error: errorUpdate } = userUpdate;
   const { email, password, name, confirmPassword } = formData;
   const { id: userId } = useParams();
 
   useEffect(() => {
     console.log('useEffect re rendered');
     if (success) {
-      dispatch({ type: USER_EDIT_RESET });
+      dispatch({ type: USER_DETAILS_RESET });
       navigate('/dashboard');
     } else if (userInfo._id === userId) {
       setFormData({ ...formData, name: userInfo.name, email: userInfo.email });
     } else if (profile) {
       setFormData({ ...formData, name: profile.name, email: profile.email });
     } else {
-      dispatch(getUserProfile(userId));
+      dispatch(getUserById(userId));
     }
   }, [dispatch, profile, userId, userInfo, navigate, success]);
 

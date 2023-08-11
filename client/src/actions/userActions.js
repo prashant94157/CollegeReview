@@ -8,9 +8,9 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
-  USER_EDIT_FAIL,
-  USER_EDIT_REQUEST,
-  USER_EDIT_SUCCESS,
+  USER_DETAILS_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
@@ -19,7 +19,7 @@ import {
   USER_DELETE_SUCCESS,
   USER_DELETE_RESET,
 } from '../constants/userConstants';
-import { REVIEWS_DETAILS_RESET } from '../constants/reviewConstants';
+import { REVIEW_DETAILS_RESET } from '../constants/reviewConstants';
 
 const login = (email, password) => async (dispatch) => {
   try {
@@ -110,7 +110,7 @@ const logout = () => async (dispatch) => {
     });
 
     dispatch({
-      type: REVIEWS_DETAILS_RESET,
+      type: REVIEW_DETAILS_RESET,
     });
 
     dispatch({
@@ -119,10 +119,10 @@ const logout = () => async (dispatch) => {
   } catch (error) {}
 };
 
-const getUserProfile = (id) => async (dispatch, getState) => {
+const getUserById = (id) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: USER_EDIT_REQUEST,
+      type: USER_DETAILS_REQUEST,
     });
 
     const {
@@ -138,12 +138,12 @@ const getUserProfile = (id) => async (dispatch, getState) => {
     const { data } = await axios.get(`/api/v1/users/${id}`, config);
 
     dispatch({
-      type: USER_EDIT_SUCCESS,
+      type: USER_DETAILS_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: USER_EDIT_FAIL,
+      type: USER_DETAILS_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
@@ -234,4 +234,4 @@ const deleteUser = (userId) => async (dispatch, getState) => {
   }
 };
 
-export { login, register, logout, getUserProfile, updateUser, deleteUser };
+export { login, register, logout, getUserById, updateUser, deleteUser };

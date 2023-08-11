@@ -1,15 +1,15 @@
 import axios from 'axios';
 
 import {
-  PLANS_LIST_FAIL,
-  PLANS_LIST_REQUEST,
-  PLANS_LIST_SUCCESS,
+  PLAN_LIST_FAIL,
+  PLAN_LIST_REQUEST,
+  PLAN_LIST_SUCCESS,
 } from '../constants/planConstant';
 
 const getPlansList = () => async (dispatch) => {
   try {
     dispatch({
-      type: PLANS_LIST_REQUEST,
+      type: PLAN_LIST_REQUEST,
     });
 
     const { data } = await axios.get('/api/v1/plans');
@@ -25,12 +25,12 @@ const getPlansList = () => async (dispatch) => {
     );
 
     dispatch({
-      type: PLANS_LIST_SUCCESS,
+      type: PLAN_LIST_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: PLANS_LIST_FAIL,
+      type: PLAN_LIST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

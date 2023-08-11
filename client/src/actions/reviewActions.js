@@ -1,15 +1,15 @@
 import axios from 'axios';
 
 import {
-  REVIEWS_DETAILS_FAIL,
-  REVIEWS_DETAILS_REQUEST,
-  REVIEWS_DETAILS_SUCCESS,
+  REVIEW_DETAILS_FAIL,
+  REVIEW_DETAILS_REQUEST,
+  REVIEW_DETAILS_SUCCESS,
 } from '../constants/reviewConstants';
 
 const getUserReviews = () => async (dispatch, getState) => {
   try {
     dispatch({
-      type: REVIEWS_DETAILS_REQUEST,
+      type: REVIEW_DETAILS_REQUEST,
     });
 
     const {
@@ -33,12 +33,12 @@ const getUserReviews = () => async (dispatch, getState) => {
     );
 
     dispatch({
-      type: REVIEWS_DETAILS_SUCCESS,
+      type: REVIEW_DETAILS_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: REVIEWS_DETAILS_FAIL,
+      type: REVIEW_DETAILS_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

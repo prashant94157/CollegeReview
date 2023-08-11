@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import {
-  profileUpdateReducer,
+  userUpdateReducer,
   userDeleteReducer,
   userLoginReducer,
   userProfileReducer,
@@ -26,7 +26,7 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   userProfile: userProfileReducer,
   userReviews: userReviewsReducer,
-  profileUpdate: profileUpdateReducer,
+  userUpdate: userUpdateReducer,
   userDelete: userDeleteReducer,
 
   planList: planListReducer,
