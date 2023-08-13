@@ -21,6 +21,7 @@ import {
   USER_LIST_SUCCESS,
   USER_LIST_FAIL,
   USER_LIST_RESET,
+  USER_UPDATE_RESET,
 } from '../constants/userConstants';
 
 const userLoginReducer = (state = {}, { type, payload }) => {
@@ -93,6 +94,8 @@ const userUpdateReducer = (state = { success: false }, { type, payload }) => {
 
     case USER_UPDATE_FAIL:
       return { ...state, loading: false, error: payload };
+    case USER_UPDATE_RESET:
+      return { success: false };
 
     default:
       return state;
