@@ -73,7 +73,12 @@ const App = () => {
 
               <Route
                 path='/users'
-                element={<PrivateRoute component={UserListScreen} />}
+                element={
+                  <PrivateRoute
+                    minUserRequirement='reviewer'
+                    component={UserListScreen}
+                  />
+                }
               />
               <Route
                 path='/users/:id/edit'
@@ -81,12 +86,22 @@ const App = () => {
               />
               <Route
                 path='/users/:id'
-                element={<PrivateRoute component={UserScreen} />}
+                element={
+                  <PrivateRoute
+                    minUserRequirement='reviewer'
+                    component={UserScreen}
+                  />
+                }
               />
 
               <Route
                 path='/plans/create'
-                element={<PrivateRoute component={PlanCreateScreen} />}
+                element={
+                  <PrivateRoute
+                    minUserRequirement='admin'
+                    component={PlanCreateScreen}
+                  />
+                }
               />
               <Route
                 path='/plans'
@@ -94,7 +109,12 @@ const App = () => {
               />
               <Route
                 path='/plans/:id/edit'
-                element={<PrivateRoute component={PlanEditScreen} />}
+                element={
+                  <PrivateRoute
+                    minUserRequirement='admin'
+                    component={PlanEditScreen}
+                  />
+                }
               />
               <Route
                 path='/plans/:id'
