@@ -16,6 +16,7 @@ import {
   PLAN_LIST_SUCCESS,
   PLAN_UPDATE_FAIL,
   PLAN_UPDATE_REQUEST,
+  PLAN_UPDATE_RESET,
   PLAN_UPDATE_SUCCESS,
 } from '../constants/planConstant';
 
@@ -98,6 +99,9 @@ const planUpdateReducer = (state = { success: false }, { type, payload }) => {
 
     case PLAN_UPDATE_FAIL:
       return { ...state, loading: false, error: payload };
+
+    case PLAN_UPDATE_RESET:
+      return { success: false };
 
     default:
       return state;

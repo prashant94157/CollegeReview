@@ -145,7 +145,7 @@ const updatePlan =
       };
 
       await axios.put(
-        `/api/v1/colleges/${planId}`,
+        `/api/v1/plans/${planId}`,
         { price, days, planType },
         config
       );

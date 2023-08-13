@@ -5,18 +5,18 @@ import Plan from '../../components/Plan';
 import { getPlanList } from '../../actions/planActions';
 import Alert from '../../components/Alert';
 import Spinner from '../../components/Spinner';
+import { Link } from 'react-router-dom';
 
 const PlanListScreen = () => {
-  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const plansList = useSelector((state) => state.planList);
   const { error, loading, success, page, pages, plans } = plansList;
 
-  useEffect(() => {
-    if (!success) dispatch(getPlanList());
+  const dispatch = useDispatch();
 
-    // return () => {
-    //   second;
-    // };
+  useEffect(() => {
+    dispatch(getPlanList());
   }, [success, dispatch]);
 
   return (
@@ -24,8 +24,19 @@ const PlanListScreen = () => {
       <div className='py-10 text-6xl font-bold text-center text-yellow-500'>
         Plans
       </div>
-
       {error && <Alert>{error}</Alert>}
+
+      {userInfo.userType === 'admin' && (
+        <div className='flex justify-around mb-6 text-2xl'>
+          <Link
+            to={`/plans/create`}
+            className='font-semibold px-3.5 py-2.5 text-yellow-300 rounded-md shadow-md hover:bg-yellow-300 hover:opacity-90 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-300'
+          >
+            Create
+          </Link>
+        </div>
+      )}
+
       {loading ? (
         <Spinner />
       ) : (
