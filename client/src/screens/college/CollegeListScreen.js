@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import College from '../../components/College';
-import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../../components/Spinner';
 import Alert from '../../components/Alert';
 import { getCollegeList } from '../../actions/collegeActions';
@@ -21,7 +21,6 @@ const CollegeListScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(keyword, pagenumber);
     dispatch(getCollegeList(keyword, pagenumber));
   }, [keyword, pagenumber, dispatch]);
 

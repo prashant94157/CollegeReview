@@ -10,61 +10,60 @@ import Alert from '../../components/Alert';
 const CollegeScreen = () => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
-  const collegeProfile = useSelector((state) => state.collegeProfile);
-  const { college, error, loading } = collegeProfile;
+  const collegeDetails = useSelector((state) => state.collegeDetails);
+  const { college, error, loading } = collegeDetails;
   const { id } = useParams();
   const { userInfo } = userLogin;
+
   useEffect(() => {
-    if (!college || college._id !== id) dispatch(getCollegeById(id));
-  }, [dispatch, college, id]);
+    dispatch(getCollegeById(id));
+  }, [dispatch, id]);
 
   return (
     <div>
       <Link to='/colleges'>Back</Link>
-      {loading ? (
+      {loading === undefined || loading ? (
         <Spinner />
       ) : error ? (
         <Alert>{error}</Alert>
       ) : (
         <>
           <div className='py-10 text-6xl font-bold text-center text-yellow-500'>
-            Bright Way Inter College
+            {college.name}
           </div>
           <div className='px-20 lg:px-40'>
             <div className='border-gray-100'>
               <dl className='divide-y divide-gray-100'>
                 <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                  <dt className='text-sm font-medium leading-6'>Full name</dt>
+                  <dt className='text-sm font-medium leading-6'>City</dt>
                   <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
-                    Margot Foster
+                    {college.city}
+                  </dd>
+                </div>
+                <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                  <dt className='text-sm font-medium leading-6 '>State</dt>
+                  <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
+                    {college.state}
+                  </dd>
+                </div>
+                <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                  <dt className='text-sm font-medium leading-6 '>Country</dt>
+                  <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
+                    {college.country}
                   </dd>
                 </div>
                 <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
                   <dt className='text-sm font-medium leading-6 '>
-                    Application for
+                    Average rating
                   </dt>
                   <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
-                    Backend Developer
+                    {college.avgRating}
                   </dd>
                 </div>
                 <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
                   <dt className='text-sm font-medium leading-6 '>
-                    Email address
+                    Available Courses
                   </dt>
-                  <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
-                    margotfoster@example.com
-                  </dd>
-                </div>
-                <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                  <dt className='text-sm font-medium leading-6 '>
-                    Salary expectation
-                  </dt>
-                  <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
-                    $120,000
-                  </dd>
-                </div>
-                <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                  <dt className='text-sm font-medium leading-6 '>About</dt>
                   <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
                     Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim
                     incididunt cillum culpa consequat. Excepteur qui ipsum
@@ -129,6 +128,7 @@ const CollegeScreen = () => {
                 </div>
               </div>
             </div>
+            
           )}
         </>
       )}

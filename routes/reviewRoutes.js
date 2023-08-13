@@ -6,5 +6,5 @@ const router = express.Router();
 
 router.get('/', protect, getReviews);
 
-router.get(protect, subscribed, getReviewById);
+router.get('/:id', protect, subscribed, getReviewById);
 export default router;
