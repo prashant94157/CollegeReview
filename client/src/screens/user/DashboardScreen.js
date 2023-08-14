@@ -7,10 +7,6 @@ import { getUserReviews } from '../../actions/reviewActions';
 import { deleteUser, logout } from '../../actions/userActions';
 import Spinner from '../../components/Spinner';
 import Alert from '../../components/Alert';
-import {
-  USER_DELETE_FAIL,
-  USER_DELETE_RESET,
-} from '../../constants/userConstants';
 
 const DashboardScreen = () => {
   const userLogin = useSelector((state) => state.userLogin);
@@ -71,26 +67,33 @@ const DashboardScreen = () => {
           </div>
         </div>
       )}
-
-      <div className='flex justify-around mb-6 text-2xl'>
-        <Link
-          to={`/users/${userInfo._id}/edit`}
-          className='font-semibold px-3.5 py-2.5 text-yellow-300 rounded-md shadow-md hover:bg-yellow-300 hover:opacity-90 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-300'
-        >
-          Edit
-        </Link>
-        <button
-          onClick={deleteAccount}
-          className='font-semibold px-3.5 py-2.5 text-yellow-300 rounded-md shadow-md hover:bg-yellow-300 hover:opacity-90 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-300'
-        >
-          Delete Account
-        </button>
-        <Link
-          to={`/colleges`}
-          className='font-semibold px-3.5 py-2.5 text-yellow-300 rounded-md shadow-md hover:bg-yellow-300 hover:opacity-90 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-300'
-        >
-          Add a review
-        </Link>
+      <div className='flex justify-center my-3'>
+        <div className='flex w-2/3 mb-6 text-2xl justify-evenly'>
+          <Link
+            to={`/users/${userInfo._id}/edit`}
+            className='font-semibold px-3.5 py-2.5 text-yellow-300 rounded-md shadow-md hover:bg-yellow-300 hover:opacity-90 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-300'
+          >
+            Edit Profile
+          </Link>
+          <button
+            onClick={deleteAccount}
+            className='font-semibold px-3.5 py-2.5 text-yellow-300 rounded-md shadow-md hover:bg-yellow-300 hover:opacity-90 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-300'
+          >
+            Delete Account
+          </button>
+          <Link
+            to={`/colleges`}
+            className='font-semibold px-3.5 py-2.5 text-yellow-300 rounded-md shadow-md hover:bg-yellow-300 hover:opacity-90 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-300'
+          >
+            Add a review
+          </Link>
+          <Link
+            to={`/colleges/create`}
+            className='font-semibold px-3.5 py-2.5 text-yellow-300 rounded-md shadow-md hover:bg-yellow-300 hover:opacity-90 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-300'
+          >
+            Create College
+          </Link>
+        </div>
       </div>
 
       <div className='px-10 pb-10 lg:px-40'>

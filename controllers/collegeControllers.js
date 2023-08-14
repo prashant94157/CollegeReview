@@ -284,7 +284,7 @@ const createReview = asyncHandler(async (req, res) => {
 
       if (review && updatedCollege) {
         res.status(201).json({
-          id: review._id,
+          _id: review._id,
           createdBy: review.createdBy,
           rating: review.rating,
           title: review.title,

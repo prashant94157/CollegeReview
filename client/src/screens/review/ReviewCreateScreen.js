@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import Alert from '../../components/Alert';
+import { useDispatch, useSelector } from 'react-redux';
+import { createReview } from '../../actions/reviewActions';
+import {
+  REVIEW_CREATE_RESET,
+  REVIEW_LIST_RESET,
+} from '../../constants/reviewConstants';
+import Spinner from '../../components/Spinner';
 
 const ReviewCreateScreen = () => {
   const [formData, setFormData] = useState({
@@ -18,11 +25,36 @@ const ReviewCreateScreen = () => {
     });
   };
 
+  const { id: collegeId } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const reviewCreate = useSelector((state) => state.reviewCreate);
+  const { loading, error, success, reviewId } = reviewCreate;
+
   const onSubmit = (e) => {
     e.preventDefault();
+    dispatch(createReview({ collegeId, title, rating, description, degree }));
   };
 
-  return (
+  useEffect(() => {
+    if (success) {
+      dispatch({
+        type: REVIEW_CREATE_RESET,
+      });
+      dispatch({
+        type: REVIEW_LIST_RESET,
+      });
+
+      localStorage.removeItem('userReviews');
+
+      navigate(`/colleges/${collegeId}/reviews/${reviewId}`);
+    }
+  }, [collegeId, dispatch, navigate, reviewId, success]);
+
+  return loading ? (
+    <Spinner />
+  ) : (
     <div className='min-h-[50vh]'>
       <div className='flex flex-col justify-center flex-1 px-6 min-h-[95vh] lg:px-8'>
         <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
@@ -75,15 +107,16 @@ const ReviewCreateScreen = () => {
               </div>
             </div>
 
-            <div>
+            <div class='col-span-full'>
               <label
                 htmlFor='description'
                 className='block text-sm font-medium leading-6'
               >
                 Description
               </label>
-              <div className='mt-2'>
-                <input
+              <div class='mt-2'>
+                <textarea
+                  rows='3'
                   id='description'
                   name='description'
                   type='textarea'
@@ -91,8 +124,8 @@ const ReviewCreateScreen = () => {
                   onChange={onChange}
                   autoComplete='description'
                   required
-                  className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-                />
+                  class='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                ></textarea>
               </div>
             </div>
 

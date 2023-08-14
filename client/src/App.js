@@ -130,11 +130,11 @@ const App = () => {
                 element={<PrivateRoute component={ReviewListScreen} />}
               />
               <Route
-                path='/colleges/:id/reviews/:id/edit'
+                path='/colleges/:id/reviews/:reviewId/edit'
                 element={<PrivateRoute component={ReviewEditScreen} />}
               />
               <Route
-                path='/colleges/:id/reviews/:id'
+                path='/colleges/:id/reviews/:reviewId'
                 element={<PrivateRoute component={ReviewScreen} />}
               />
 

@@ -28,7 +28,10 @@ const College = ({
         <Link to={`/colleges/${_id}/edit`}>Edit</Link>
       </div>
 
-      <div className='col-span-3'>{reviews.length}</div>
+      <div className='col-span-2'>{reviews.length}</div>
+      <div>
+        <Link to={`/colleges/${_id}/reviews/create`}>Review</Link>
+      </div>
     </div>
   );
 };

@@ -21,8 +21,31 @@ import {
   USER_LIST_REQUEST,
   USER_LIST_FAIL,
   USER_LIST_SUCCESS,
+  USER_LIST_RESET,
+  USER_DETAILS_RESET,
+  USER_UPDATE_RESET,
 } from '../constants/userConstants';
-import { REVIEW_DETAILS_RESET } from '../constants/reviewConstants';
+import {
+  REVIEW_CREATE_RESET,
+  REVIEW_DELETE_RESET,
+  REVIEW_DETAILS_RESET,
+  REVIEW_LIST_RESET,
+  REVIEW_UPDATE_RESET,
+} from '../constants/reviewConstants';
+import {
+  COLLEGE_CREATE_RESET,
+  COLLEGE_DELETE_RESET,
+  COLLEGE_DETAILS_RESET,
+  COLLEGE_LIST_RESET,
+  COLLEGE_UPDATE_RESET,
+} from '../constants/collegeConstant';
+import {
+  PLAN_CREATE_RESET,
+  PLAN_DELETE_RESET,
+  PLAN_DETAILS_RESET,
+  PLAN_LIST_RESET,
+  PLAN_UPDATE_RESET,
+} from '../constants/planConstant';
 
 const login = (email, password) => async (dispatch) => {
   try {
@@ -107,9 +130,58 @@ const logout = () => async (dispatch) => {
   try {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('userReviews');
+    localStorage.removeItem('plans');
 
     dispatch({
       type: USER_LOGOUT,
+    });
+
+    dispatch({
+      type: COLLEGE_UPDATE_RESET,
+    });
+
+    dispatch({
+      type: COLLEGE_DELETE_RESET,
+    });
+
+    dispatch({
+      type: COLLEGE_DETAILS_RESET,
+    });
+
+    dispatch({
+      type: COLLEGE_LIST_RESET,
+    });
+
+    dispatch({
+      type: COLLEGE_CREATE_RESET,
+    });
+
+    dispatch({
+      type: PLAN_UPDATE_RESET,
+    });
+
+    dispatch({
+      type: PLAN_DELETE_RESET,
+    });
+
+    dispatch({
+      type: PLAN_DETAILS_RESET,
+    });
+
+    dispatch({
+      type: PLAN_LIST_RESET,
+    });
+
+    dispatch({
+      type: PLAN_CREATE_RESET,
+    });
+
+    dispatch({
+      type: REVIEW_UPDATE_RESET,
+    });
+
+    dispatch({
+      type: REVIEW_DELETE_RESET,
     });
 
     dispatch({
@@ -117,7 +189,27 @@ const logout = () => async (dispatch) => {
     });
 
     dispatch({
+      type: REVIEW_LIST_RESET,
+    });
+
+    dispatch({
+      type: REVIEW_CREATE_RESET,
+    });
+
+    dispatch({
+      type: USER_UPDATE_RESET,
+    });
+
+    dispatch({
       type: USER_DELETE_RESET,
+    });
+
+    dispatch({
+      type: USER_DETAILS_RESET,
+    });
+
+    dispatch({
+      type: USER_LIST_RESET,
     });
   } catch (error) {}
 };
