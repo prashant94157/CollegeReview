@@ -9,10 +9,9 @@ import generateToken from '../utils/generateToken.js';
 // @access  public
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password);
   const user = await User.findOne({ email });
 
-  if (user && (await user.matchPassword(password))) {
+  if (user && user.active && (await user.matchPassword(password))) {
     const token = generateToken(user._id);
     return res.json({
       _id: user.id,
@@ -20,6 +19,9 @@ const authUser = asyncHandler(async (req, res) => {
       email: user.email,
       userType: user.userType,
       token,
+      subscribedTill: user.subscribedTill,
+      about: user.about,
+      createdAt: user.createdAt,
     });
   }
 
@@ -46,12 +48,16 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 
   if (user) {
+    const token = generateToken(user._id);
     res.status(201).json({
       _id: user.id,
       name: user.name,
       email: user.email,
       userType: user.userType,
-      token: generateToken(user._id),
+      token,
+      subscribedTill: user.subscribedTill,
+      about: user.about,
+      createdAt: user.createdAt,
     });
   } else {
     res.status(401);
@@ -78,7 +84,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @access  Private(user)
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-  // console.log(req.user._id);
+
   if (user) {
     if (req.body.email) {
       const userExists = await User.findOne({ email: req.body.email });
@@ -90,6 +96,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     }
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
+    user.about = req.body.about || user.about;
     if (req.body.password) {
       user.password = req.body.password;
     }
@@ -97,11 +104,14 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     const updatedUser = await user.save();
 
     res.json({
-      _id: updatedUser._id,
+      _id: updatedUser.id,
       name: updatedUser.name,
       email: updatedUser.email,
       userType: updatedUser.userType,
       token: generateToken(updatedUser._id),
+      subscribedTill: updatedUser.subscribedTill,
+      about: updatedUser.about,
+      createdAt: updatedUser.createdAt,
     });
   } else {
     res.status(404);
@@ -134,7 +144,9 @@ const deleteUser = asyncHandler(async (req, res) => {
     user &&
     (req.user.userType === 'admin' || req.user._id.equals(req.params.id))
   ) {
-    await user.deleteOne();
+    user.active = false;
+    await user.save();
+
     res.json({ message: 'User removed successfully!!!' });
   } else {
     res.status(404);

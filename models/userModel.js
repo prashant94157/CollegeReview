@@ -18,8 +18,10 @@ const userSchema = mongoose.Schema(
     },
     userType: {
       type: String,
+      enum: ['user', 'admin', 'reviewer'],
+      default: 'user',
       required: true,
-      default: 'user', // 'admin' , 'reviewer'
+      description: 'Must be either user, reviewer or admin',
     },
     subscribedTill: {
       type: Date,
@@ -28,6 +30,12 @@ const userSchema = mongoose.Schema(
     },
     about: {
       type: String,
+      default: '',
+    },
+    active: {
+      type: Boolean,
+      required: true,
+      default: true,
     },
   },
   { timestamps: true }

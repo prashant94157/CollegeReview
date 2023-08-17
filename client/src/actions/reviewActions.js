@@ -82,8 +82,6 @@ const createReview =
         config
       );
 
-      console.log(data);
-
       dispatch({
         type: REVIEW_CREATE_SUCCESS,
         payload: data,

@@ -52,7 +52,6 @@ const login = (email, password) => async (dispatch) => {
     dispatch({
       type: USER_LOGIN_REQUEST,
     });
-    console.log(email, password);
 
     const config = {
       headers: {
@@ -90,7 +89,6 @@ const register =
       dispatch({
         type: USER_REGISTER_REQUEST,
       });
-      console.log(email, password, name);
 
       const config = {
         headers: {
@@ -271,7 +269,6 @@ const updateUser =
         { email, password, name },
         config
       );
-      console.log(data);
 
       if (userInfo._id === data._id) {
         dispatch({

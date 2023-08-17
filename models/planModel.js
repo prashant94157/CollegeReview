@@ -17,11 +17,14 @@ const planSchema = mongoose.Schema(
     },
     planType: {
       type: String,
+      enum: ['free', 'not-free'],
       required: true,
-      default: 'not-free', // 'free'
+      default: 'not-free',
+      description: 'Must be either free or not-free',
     },
     about: {
       type: String,
+      default: '',
     },
   },
   { timestamps: true }

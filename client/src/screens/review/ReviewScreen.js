@@ -1,28 +1,47 @@
 import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getReviewById } from '../../actions/reviewActions';
+import { deleteReview, getReviewById } from '../../actions/reviewActions';
 import Spinner from '../../components/Spinner';
 import Alert from '../../components/Alert';
 
 const ReviewScreen = () => {
-  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const reviewDelete = useSelector((state) => state.reviewDelete);
   const reviewDetails = useSelector((state) => state.reviewDetails);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { review, error, loading } = reviewDetails;
+  const {
+    loading: deleteLoading,
+    error: deleteError,
+    success: deleteSuccess,
+  } = reviewDelete;
   const { id: collegeId, reviewId } = useParams();
+  const { userInfo } = userLogin;
 
   useEffect(() => {
-    dispatch(getReviewById(reviewId));
-  }, []);
+    if (deleteSuccess) navigate(`/colleges/${collegeId}`);
+
+    if (!review) dispatch(getReviewById(reviewId));
+  }, [dispatch, review, collegeId, deleteSuccess, navigate]);
+
+  const deleteReviewHandler = () => {
+    if (window.confirm('Are you sure ?')) dispatch(deleteReview(reviewId));
+  };
 
   return (
     <div>
       <Link to={`/colleges/${collegeId}`}>Back</Link>
-      {loading === undefined || loading ? (
+      {loading === undefined || loading || deleteLoading ? (
         <Spinner />
       ) : error ? (
         <Alert>{error}</Alert>
+      ) : deleteError ? (
+        <Alert>{deleteError}</Alert>
       ) : (
         <div>
           <div className='py-10 text-6xl font-bold text-center text-yellow-500'>
@@ -64,6 +83,23 @@ const ReviewScreen = () => {
                   </dd>
                 </div>
               </dl>
+            </div>
+          </div>
+
+          <div className='flex justify-center my-3'>
+            <div className='flex w-2/3 mb-6 text-2xl justify-evenly'>
+              <Link
+                to={`/colleges/${collegeId}/reviews/${reviewId}/edit`}
+                className='font-semibold px-3.5 py-2.5 text-yellow-300 rounded-md shadow-md hover:bg-yellow-300 hover:opacity-90 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-300'
+              >
+                Edit Review
+              </Link>
+              <button
+                onClick={deleteReviewHandler}
+                className='font-semibold px-3.5 py-2.5 text-yellow-300 rounded-md shadow-md hover:bg-yellow-300 hover:opacity-90 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-300'
+              >
+                Delete Review
+              </button>
             </div>
           </div>
         </div>

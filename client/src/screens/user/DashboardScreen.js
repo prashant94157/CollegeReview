@@ -7,11 +7,12 @@ import { getUserReviews } from '../../actions/reviewActions';
 import { deleteUser, logout } from '../../actions/userActions';
 import Spinner from '../../components/Spinner';
 import Alert from '../../components/Alert';
+import formatDate from '../../utils/formatDate';
 
 const DashboardScreen = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  const { name, email } = userInfo;
+  const { name, email, subscribedTill, about, createdAt } = userInfo;
 
   const userReviews = useSelector((state) => state.userReviews);
   const { loading, reviews, error, success } = userReviews;
@@ -39,6 +40,12 @@ const DashboardScreen = () => {
     if (window.confirm('Are you sure ?')) dispatch(deleteUser(userInfo._id));
   };
 
+  const isSubscribed = (d) => {
+    const date1 = new Date(d);
+    const date2 = new Date();
+    return date1 > date2;
+  };
+
   return (
     <div>
       <div className='py-10 text-6xl font-bold text-center text-yellow-500'>
@@ -61,6 +68,28 @@ const DashboardScreen = () => {
                 <dt className='text-sm font-medium leading-6 '>Email</dt>
                 <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
                   {email}
+                </dd>
+              </div>
+              <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                <dt className='text-sm font-medium leading-6 '>
+                  Subscribed Till
+                </dt>
+                <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
+                  {isSubscribed(subscribedTill)
+                    ? 'Subscribed'
+                    : 'Not-Subscribed'}
+                </dd>
+              </div>
+              <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                <dt className='text-sm font-medium leading-6 '>Created At</dt>
+                <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
+                  {formatDate(createdAt)}
+                </dd>
+              </div>
+              <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                <dt className='text-sm font-medium leading-6 '>About</dt>
+                <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
+                  {about || '...'}
                 </dd>
               </div>
             </dl>
