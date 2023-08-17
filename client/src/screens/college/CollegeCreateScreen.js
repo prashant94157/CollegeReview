@@ -13,8 +13,10 @@ const CollegeCreateScreen = () => {
     city: '',
     state: '',
     country: '',
+    pinCode: '',
+    about: '',
   });
-  const { name, city, state, country } = formData;
+  const { name, city, state, country, pinCode, about } = formData;
   const onChange = (e) => {
     setFormData({
       ...formData,
@@ -39,13 +41,13 @@ const CollegeCreateScreen = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(createCollege({ name, state, country, city }));
+    dispatch(createCollege({ name, state, country, city, pinCode, about }));
   };
 
   return loading ? (
     <Spinner />
   ) : (
-    <div className='min-h-[50vh]'>
+    <div className='py-10'>
       {error && <Alert>{error}</Alert>}
       <div className='flex flex-col justify-center flex-1 px-6 min-h-[95vh] lg:px-8'>
         <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
@@ -71,6 +73,27 @@ const CollegeCreateScreen = () => {
                   value={name}
                   onChange={onChange}
                   autoComplete='name'
+                  required
+                  className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor='pinCode'
+                className='block text-sm font-medium leading-6'
+              >
+                Pin Code
+              </label>
+              <div className='mt-2'>
+                <input
+                  id='pinCode'
+                  name='pinCode'
+                  type='number'
+                  value={pinCode}
+                  onChange={onChange}
+                  autoComplete='pinCode'
                   required
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 />
@@ -137,6 +160,25 @@ const CollegeCreateScreen = () => {
                   required
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 />
+              </div>
+            </div>
+
+            <div class='col-span-full'>
+              <label
+                htmlFor='about'
+                className='block text-sm font-medium leading-6'
+              >
+                About
+              </label>
+              <div class='mt-2'>
+                <textarea
+                  id='about'
+                  name='about'
+                  type='textarea'
+                  value={about}
+                  onChange={onChange}
+                  class='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                ></textarea>
               </div>
             </div>
 

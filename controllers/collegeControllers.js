@@ -7,9 +7,16 @@ import Review from '../models/reviewModel.js';
 // @route   POST /api/v1/colleges
 // @access  private(user)
 const createCollege = asyncHandler(async (req, res) => {
-  const { name, city, state, country } = req.body;
+  const { name, state, country, city, pinCode, about } = req.body;
 
-  const collegeExists = await College.findOne({ name, city, state, country });
+  const collegeExists = await College.findOne({
+    name,
+    state,
+    country,
+    city,
+    pinCode,
+    about,
+  });
 
   if (collegeExists) {
     res.status(400);
@@ -17,26 +24,17 @@ const createCollege = asyncHandler(async (req, res) => {
   }
 
   let college = await College.create({
+    createdBy: req.user._id,
     name,
-    city,
     state,
     country,
-    createdBy: req.user._id,
+    city,
+    pinCode,
+    about,
   });
 
   if (college) {
-    res.status(201).json({
-      _id: college.id,
-      name: college.name,
-      city: college.city,
-      state: college.state,
-      country: college.country,
-      createdBy: college.createdBy,
-      isApproved: college.isApproved,
-      approvedBy: college.approvedBy,
-      avgRating: college.avgRating,
-      totalReviews: college.totalReviews,
-    });
+    res.status(201).json(college);
   } else {
     res.status(401);
     throw new Error('Invalid College data!!');
@@ -66,19 +64,12 @@ const updateCollege = asyncHandler(async (req, res) => {
     college.city = req.body.city || college.city;
     college.state = req.body.state || college.state;
     college.country = req.body.country || college.country;
+    college.pinCode = req.body.pinCode || college.pinCode;
+    college.about = req.body.about || college.about;
 
     const updatedCollege = await college.save();
 
-    res.status(201).json({
-      _id: updatedCollege.id,
-      name: updatedCollege.name,
-      city: updatedCollege.city,
-      state: updatedCollege.state,
-      country: updatedCollege.country,
-      createdBy: updatedCollege._id,
-      isApproved: updatedCollege.isApproved,
-      approvedBy: updatedCollege.approvedBy,
-    });
+    res.status(201).json(updatedCollege);
   } else {
     res.status(404);
     throw new Error('College not found!!!');
@@ -98,6 +89,9 @@ const deleteCollege = asyncHandler(async (req, res) => {
         (req.user.userType === 'reviewer' ||
           college.createdBy.equals(req.user._id)))
     ) {
+      await Review.deleteMany({
+        college: { $eq: college._id },
+      });
       await college.deleteOne();
 
       res.json({ message: 'College removed successfully!!!' });

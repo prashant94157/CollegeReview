@@ -18,6 +18,10 @@ const collegeSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    pinCode: {
+      type: Number,
+      required: true,
+    },
     avgRating: {
       type: Number,
       required: true,
@@ -64,6 +68,7 @@ const collegeSchema = mongoose.Schema(
     },
     about: {
       type: String,
+      default: '',
     },
   },
   { timestamps: true }

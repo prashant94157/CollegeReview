@@ -25,9 +25,9 @@ const CollegeScreen = () => {
   const { userInfo } = userLogin;
 
   useEffect(() => {
-    if (!college) dispatch(getCollegeById(id));
-
     if (deleteSuccess) navigate('/dashboard');
+
+    if (!college) dispatch(getCollegeById(id));
   }, [dispatch, college, id, deleteSuccess, navigate]);
 
   const deleteCollegeHandler = () => {
@@ -55,6 +55,12 @@ const CollegeScreen = () => {
                   <dt className='text-sm font-medium leading-6'>City</dt>
                   <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
                     {college.city}
+                  </dd>
+                </div>
+                <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                  <dt className='text-sm font-medium leading-6 '>Pin code</dt>
+                  <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
+                    {college.pinCode}
                   </dd>
                 </div>
                 <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
@@ -87,6 +93,13 @@ const CollegeScreen = () => {
                     aliquip consequat sint. Sit id mollit nulla mollit nostrud
                     in ea officia proident. Irure nostrud pariatur mollit ad
                     adipisicing reprehenderit deserunt qui eu.
+                  </dd>
+                </div>
+
+                <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                  <dt className='text-sm font-medium leading-6 '>About</dt>
+                  <dd className='mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0'>
+                    {college.about}
                   </dd>
                 </div>
               </dl>

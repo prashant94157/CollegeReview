@@ -23,13 +23,15 @@ const CollegeEditScreen = () => {
     city: '',
     state: '',
     country: '',
+    pinCode: '',
+    about: '',
   });
   const [message, setMessage] = useState('');
 
   const { userInfo } = userLogin;
   const { loading, college, error } = collegeDetails;
   const { success, loading: loadingUpdate, error: errorUpdate } = collegeUpdate;
-  const { name, city, state, country } = formData;
+  const { name, city, state, country, pinCode, about } = formData;
   const { id: collegeId } = useParams();
 
   useEffect(() => {
@@ -38,7 +40,7 @@ const CollegeEditScreen = () => {
         type: COLLEGE_DETAILS_RESET,
       });
       dispatch({ type: COLLEGE_UPDATE_RESET });
-      
+
       navigate(`/colleges/${collegeId}`);
     } else if (college) {
       setFormData({
@@ -46,6 +48,8 @@ const CollegeEditScreen = () => {
         city: college.city,
         state: college.state,
         country: college.country,
+        pinCode: college.pinCode,
+        about: college.about,
       });
     } else {
       dispatch(getCollegeById(collegeId));
@@ -61,7 +65,9 @@ const CollegeEditScreen = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateCollege({ collegeId, name, state, country, city }));
+    dispatch(
+      updateCollege({ collegeId, name, city, state, country, pinCode, about })
+    );
   };
 
   return (
@@ -123,6 +129,27 @@ const CollegeEditScreen = () => {
 
                 <div>
                   <label
+                    htmlFor='pinCode'
+                    className='block text-sm font-medium leading-6'
+                  >
+                    Pin Code
+                  </label>
+                  <div className='mt-2'>
+                    <input
+                      id='pinCode'
+                      name='pinCode'
+                      type='number'
+                      value={pinCode}
+                      onChange={onChange}
+                      autoComplete='pinCode'
+                      required
+                      className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label
                     htmlFor='state'
                     className='block text-sm font-medium leading-6'
                   >
@@ -156,6 +183,25 @@ const CollegeEditScreen = () => {
                       onChange={onChange}
                       className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                     />
+                  </div>
+                </div>
+
+                <div class='col-span-full'>
+                  <label
+                    htmlFor='about'
+                    className='block text-sm font-medium leading-6'
+                  >
+                    About
+                  </label>
+                  <div class='mt-2'>
+                    <textarea
+                      id='about'
+                      name='about'
+                      type='textarea'
+                      value={about}
+                      onChange={onChange}
+                      class='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                    ></textarea>
                   </div>
                 </div>
 

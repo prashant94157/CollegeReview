@@ -20,7 +20,7 @@ import {
 } from '../constants/collegeConstant';
 
 const createCollege =
-  ({ name, city, state, country }) =>
+  ({ name, state, country, city, pinCode, about }) =>
   async (dispatch, getState) => {
     try {
       dispatch({
@@ -39,7 +39,7 @@ const createCollege =
 
       const { data } = await axios.post(
         `/api/v1/colleges`,
-        { name, city, state, country },
+        { name, state, country, city, pinCode, about },
         config
       );
 
@@ -129,7 +129,7 @@ const getCollegeById = (id) => async (dispatch, getState) => {
 };
 
 const updateCollege =
-  ({ collegeId, name, city, state, country }) =>
+  ({ collegeId, name, city, state, country, pinCode, about }) =>
   async (dispatch, getState) => {
     try {
       dispatch({
@@ -149,7 +149,7 @@ const updateCollege =
 
       await axios.put(
         `/api/v1/colleges/${collegeId}`,
-        { name, city, state, country },
+        { name, city, state, country, pinCode, about },
         config
       );
 
