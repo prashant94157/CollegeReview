@@ -20,6 +20,9 @@ const planSchema = mongoose.Schema(
       required: true,
       default: 'not-free', // 'free'
     },
+    about: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

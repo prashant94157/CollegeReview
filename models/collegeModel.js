@@ -62,6 +62,9 @@ const collegeSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
+    about: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

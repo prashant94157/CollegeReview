@@ -1,31 +1,48 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import Review from '../../components/Review';
-import { getCollegeById } from '../../actions/collegeActions';
+import { deleteCollege, getCollegeById } from '../../actions/collegeActions';
 import Spinner from '../../components/Spinner';
 import Alert from '../../components/Alert';
 
 const CollegeScreen = () => {
-  const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const collegeDetails = useSelector((state) => state.collegeDetails);
+  const collegeDelete = useSelector((state) => state.collegeDelete);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const { college, error, loading } = collegeDetails;
+  const {
+    loading: deleteLoading,
+    error: deleteError,
+    success: deleteSuccess,
+  } = collegeDelete;
   const { id } = useParams();
   const { userInfo } = userLogin;
 
   useEffect(() => {
-    dispatch(getCollegeById(id));
-  }, [dispatch, id]);
+    if (!college) dispatch(getCollegeById(id));
+
+    if (deleteSuccess) navigate('/dashboard');
+  }, [dispatch, college, id, deleteSuccess, navigate]);
+
+  const deleteCollegeHandler = () => {
+    if (window.confirm('Are you sure ?')) dispatch(deleteCollege(id));
+  };
 
   return (
     <div>
       <Link to='/colleges'>Back</Link>
-      {loading === undefined || loading ? (
+      {loading === undefined || loading || deleteLoading ? (
         <Spinner />
       ) : error ? (
         <Alert>{error}</Alert>
+      ) : deleteError ? (
+        <Alert>{deleteError}</Alert>
       ) : (
         <>
           <div className='py-10 text-6xl font-bold text-center text-yellow-500'>
@@ -73,6 +90,29 @@ const CollegeScreen = () => {
                   </dd>
                 </div>
               </dl>
+            </div>
+          </div>
+
+          <div className='flex justify-center my-3'>
+            <div className='flex w-2/3 mb-6 text-2xl justify-evenly'>
+              <Link
+                to={`/colleges/${id}/edit`}
+                className='font-semibold px-3.5 py-2.5 text-yellow-300 rounded-md shadow-md hover:bg-yellow-300 hover:opacity-90 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-300'
+              >
+                Edit College
+              </Link>
+              <button
+                onClick={deleteCollegeHandler}
+                className='font-semibold px-3.5 py-2.5 text-yellow-300 rounded-md shadow-md hover:bg-yellow-300 hover:opacity-90 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-300'
+              >
+                Delete College
+              </button>
+              <Link
+                to={`/colleges/${id}/reviews/create`}
+                className='font-semibold px-3.5 py-2.5 text-yellow-300 rounded-md shadow-md hover:bg-yellow-300 hover:opacity-90 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-300'
+              >
+                Add a review
+              </Link>
             </div>
           </div>
 
@@ -128,7 +168,6 @@ const CollegeScreen = () => {
                 </div>
               </div>
             </div>
-            
           )}
         </>
       )}

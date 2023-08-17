@@ -9,7 +9,9 @@
     "server": "nodemon server.js --ignore client",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "predeploy": "npm i && cd client && npm i && npm run build"
+    "predeploy": "npm i && cd client && npm i && npm run build",
+    "data:import": "node seeder",
+    "data:destroy": "node seeder -d"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

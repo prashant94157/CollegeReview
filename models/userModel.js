@@ -26,6 +26,9 @@ const userSchema = mongoose.Schema(
       required: true,
       default: Date.now,
     },
+    about: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
