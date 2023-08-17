@@ -108,7 +108,7 @@ const DashboardScreen = () => {
             {reviews.length ? (
               <div className='grid gap-4 px-10 py-5 pt-3 lg:grid-cols-2 '>
                 {reviews.map((review) => (
-                  <Review review={review} key={review._id} />
+                  <Review review={review} showCollege={true} key={review._id} />
                 ))}
               </div>
             ) : (

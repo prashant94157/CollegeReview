@@ -176,8 +176,26 @@ const getDisapprovedColleges = asyncHandler(async (req, res) => {
 // @access  private(admin + reviewer + subscribed User)
 const getCollegeById = asyncHandler(async (req, res) => {
   const college = await College.findById(req.params.id)
-    .populate('disapprovedReviews')
-    .populate('approvedReviews');
+    .populate({
+      path: 'disapprovedReviews',
+      populate: [
+        {
+          path: 'createdBy',
+          model: 'User',
+          select: 'name',
+        },
+      ],
+    })
+    .populate({
+      path: 'approvedReviews',
+      populate: [
+        {
+          path: 'createdBy',
+          model: 'User',
+          select: 'name',
+        },
+      ],
+    });
 
   if (college) {
     if (
