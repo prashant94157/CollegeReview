@@ -9,8 +9,9 @@ import { Link } from 'react-router-dom';
 
 const PlanListScreen = () => {
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
   const plansList = useSelector((state) => state.planList);
+
+  const { userInfo } = userLogin;
   const { error, loading, success, page, pages, plans } = plansList;
 
   const dispatch = useDispatch();

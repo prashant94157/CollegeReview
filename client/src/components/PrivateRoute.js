@@ -8,7 +8,9 @@ const PrivateRoute = ({ component: Component, minUserRequirement }) => {
 
   if (
     !userInfo ||
-    (minUserRequirement && minUserRequirement !== userInfo.userType)
+    (minUserRequirement &&
+      ((minUserRequirement === 'reviewer' && userInfo.userType === 'user') ||
+        (minUserRequirement === 'admin' && userInfo.userType !== 'admin')))
   ) {
     return <Navigate to='/' replace />;
   }

@@ -20,7 +20,7 @@ const Header = () => {
     ''
   ) : (
     <div className='flex items-center justify-around h-24 font-sans text-2xl font-extrabold shadow-md'>
-      <div>
+      <div className='flex space-x-10'>
         <Link
           className='hover:border-b-2 hover:text-[#fff000] hover:border-b-[#fff000]'
           to='/dashboard'
@@ -29,6 +29,14 @@ const Header = () => {
         </Link>
       </div>
       <div className='flex space-x-10'>
+        <div>
+          <Link
+            className='hover:border-b-2 hover:text-[#fff000] hover:border-b-[#fff000]'
+            to='/users'
+          >
+            Users
+          </Link>
+        </div>
         <div>
           <Link
             className='hover:border-b-2 hover:text-[#fff000] hover:border-b-[#fff000]'

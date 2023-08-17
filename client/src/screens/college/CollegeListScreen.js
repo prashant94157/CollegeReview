@@ -44,7 +44,7 @@ const CollegeListScreen = () => {
 
       {keyword && <Link to='/colleges'>Back</Link>}
 
-      <Search url='/colleges' />
+      <Search url='/colleges' placeholder='Search college...' />
 
       {loading ? (
         <Spinner />

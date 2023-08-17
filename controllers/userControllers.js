@@ -123,11 +123,20 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route   GET /api/v1/users, optional = ?pageNumber=2
 // @access  Private(reviewer + admin)
 const getUsers = asyncHandler(async (req, res) => {
-  const pageSize = 5;
+  const pageSize = 10;
   const page = Number(req.query.pageNumber) || 1;
 
-  const count = await User.count({});
-  const users = await User.find({})
+  const options = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {};
+
+  const count = await User.count({ ...options });
+  const users = await User.find({ ...options })
     .select('-password')
     .limit(pageSize)
     .skip(pageSize * (page - 1));
