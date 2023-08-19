@@ -40,12 +40,23 @@ const collegeCreateReducer = (state = {}, { type, payload }) => {
 };
 
 const collegeListReducer = (
-  state = { colleges: [], success: false, search: '' },
+  state = { colleges: [], success: false, keyword: '', page: 0, pages: 0 },
   { type, payload }
 ) => {
   switch (type) {
     case COLLEGE_LIST_REQUEST:
-      return { ...state, loading: true };
+      console.log(state, payload);
+      if (state.keyword === payload.keyword)
+        return { ...state, loading: true, success: false };
+
+      return {
+        colleges: [],
+        success: false,
+        keyword: payload.keyword,
+        page: 0,
+        pages: 0,
+        loading: true,
+      };
 
     case COLLEGE_LIST_SUCCESS:
       return {
@@ -53,9 +64,8 @@ const collegeListReducer = (
         loading: false,
         page: payload.page,
         pages: payload.pages,
-        colleges: payload.colleges,
+        colleges: [...state.colleges, ...payload.colleges],
         success: true,
-        search: payload.search,
       };
 
     case COLLEGE_LIST_FAIL:
@@ -67,7 +77,7 @@ const collegeListReducer = (
       };
 
     case COLLEGE_LIST_RESET:
-      return { success: false, colleges: [], search: '' };
+      return { colleges: [], success: false, keyword: '', page: 0, pages: 0 };
 
     default:
       return state;

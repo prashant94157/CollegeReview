@@ -66,6 +66,7 @@ const getCollegeList = (keyword, pagenumber) => async (dispatch, getState) => {
   try {
     dispatch({
       type: COLLEGE_LIST_REQUEST,
+      payload: { keyword: keyword },
     });
 
     const {

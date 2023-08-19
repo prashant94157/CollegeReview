@@ -109,7 +109,7 @@ const deleteCollege = asyncHandler(async (req, res) => {
 // @route   GET /api/v1/colleges
 // @access  private(subscribed User, reviewer, admin)
 const getApprovedColleges = asyncHandler(async (req, res) => {
-  const pageSize = 10;
+  const pageSize = 3;
   const page = Number(req.query.pagenumber) || 1;
 
   const options = req.query.keyword
@@ -132,7 +132,13 @@ const getApprovedColleges = asyncHandler(async (req, res) => {
   const colleges = await College.find({ ...options })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
-  res.json({ colleges, page, pages: Math.ceil(count / pageSize) });
+
+  res.json({
+    colleges,
+    page,
+    keyword: req.query.keyword || '',
+    pages: Math.ceil(count / pageSize),
+  });
 });
 
 // @desc    read all disapproved colleges for user

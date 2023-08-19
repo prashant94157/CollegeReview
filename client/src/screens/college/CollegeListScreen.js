@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -7,22 +7,47 @@ import Spinner from '../../components/Spinner';
 import Alert from '../../components/Alert';
 import { getCollegeList } from '../../actions/collegeActions';
 import Search from '../../components/Search';
+import { COLLEGE_LIST_RESET } from '../../constants/collegeConstant';
 
 const CollegeListScreen = () => {
   let [searchParams, setSearchParams] = useSearchParams();
+  const [pageNumber, setPageNumber] = useState(1);
 
   const keyword = searchParams.get('keyword') || '';
-  const pagenumber = searchParams.get('pagenumber') || 1;
+  // const pagenumber = searchParams.get('pagenumber') || 1;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const collegeList = useSelector((state) => state.collegeList);
-  const { colleges, loading, error, pages, page } = collegeList;
+  const { colleges, loading, error, pages, keyword: searchWord } = collegeList;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCollegeList(keyword, pagenumber));
-  }, [keyword, pagenumber, dispatch]);
+    if (searchWord !== keyword) {
+      setPageNumber(1);
+    }
+    dispatch(getCollegeList(keyword, pageNumber));
+  }, [keyword, pageNumber, dispatch]);
+
+  const handleInfiniteScroll = async () => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop + 200 >=
+      document.documentElement.scrollHeight
+    ) {
+      setPageNumber((prev) => prev + 1);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleInfiniteScroll);
+
+    if (pageNumber === pages)
+      window.removeEventListener('scroll', handleInfiniteScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleInfiniteScroll);
+    };
+  }, [handleInfiniteScroll, pages, pageNumber]);
 
   return (
     <div>
@@ -46,25 +71,20 @@ const CollegeListScreen = () => {
 
       <Search url='/colleges' placeholder='Search college...' />
 
-      {loading ? (
-        <Spinner />
+      {colleges.length ? (
+        <div className='px-10 pb-10 lg:px-40'>
+          <div className='grid gap-4 px-10 py-5 pt-3 lg:grid-cols-2 '>
+            {colleges.map((college) => (
+              <College data={college} key={college._id} />
+            ))}
+          </div>
+        </div>
       ) : (
-        <>
-          {colleges.length ? (
-            <div className='px-10 pb-10 lg:px-40'>
-              <div className='grid gap-4 px-10 py-5 pt-3 lg:grid-cols-2 '>
-                {colleges.map((college) => (
-                  <College data={college} key={college._id} />
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className='flex items-center justify-center w-full h-40 text-lg '>
-              <div>We have no colleges for you as of now!!!</div>
-            </div>
-          )}
-        </>
+        <div className='flex items-center justify-center w-full h-40 text-lg '>
+          <div>We have no colleges for you as of now!!!</div>
+        </div>
       )}
+      {loading && <Spinner />}
     </div>
   );
 };
