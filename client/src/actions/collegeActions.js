@@ -62,7 +62,7 @@ const createCollege =
     }
   };
 
-const getCollegeList = (keyword, pagenumber) => async (dispatch, getState) => {
+const getCollegeList = (keyword, pageNumber) => async (dispatch, getState) => {
   try {
     dispatch({
       type: COLLEGE_LIST_REQUEST,
@@ -80,7 +80,7 @@ const getCollegeList = (keyword, pagenumber) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      `/api/v1/colleges?keyword=${keyword}&pagenumber=${pagenumber}`,
+      `/api/v1/colleges?keyword=${keyword}&pageNumber=${pageNumber}`,
       config
     );
 

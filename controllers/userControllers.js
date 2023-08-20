@@ -123,7 +123,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route   GET /api/v1/users, optional = ?pageNumber=2
 // @access  Private(reviewer + admin)
 const getUsers = asyncHandler(async (req, res) => {
-  const pageSize = 10;
+  const pageSize = 6;
   const page = Number(req.query.pageNumber) || 1;
 
   const options = req.query.keyword
@@ -140,7 +140,13 @@ const getUsers = asyncHandler(async (req, res) => {
     .select('-password')
     .limit(pageSize)
     .skip(pageSize * (page - 1));
-  res.json({ users, page, pages: Math.ceil(count / pageSize) });
+
+  res.json({
+    users,
+    page,
+    keyword: req.query.keyword || '',
+    pages: Math.ceil(count / pageSize),
+  });
 });
 
 // @desc    Delete user

@@ -7,26 +7,24 @@ import Spinner from '../../components/Spinner';
 import Alert from '../../components/Alert';
 import { getCollegeList } from '../../actions/collegeActions';
 import Search from '../../components/Search';
-import { COLLEGE_LIST_RESET } from '../../constants/collegeConstant';
 
 const CollegeListScreen = () => {
   let [searchParams, setSearchParams] = useSearchParams();
   const [pageNumber, setPageNumber] = useState(1);
 
   const keyword = searchParams.get('keyword') || '';
-  // const pagenumber = searchParams.get('pagenumber') || 1;
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
   const collegeList = useSelector((state) => state.collegeList);
+
+  const { userInfo } = userLogin;
   const { colleges, loading, error, pages, keyword: searchWord } = collegeList;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (searchWord !== keyword) {
-      setPageNumber(1);
-    }
-    dispatch(getCollegeList(keyword, pageNumber));
+    if (searchWord !== keyword) setPageNumber(1);
+
+    if (pageNumber <= pages) dispatch(getCollegeList(keyword, pageNumber));
   }, [keyword, pageNumber, dispatch]);
 
   const handleInfiniteScroll = async () => {
@@ -41,13 +39,10 @@ const CollegeListScreen = () => {
   useEffect(() => {
     window.addEventListener('scroll', handleInfiniteScroll);
 
-    if (pageNumber === pages)
-      window.removeEventListener('scroll', handleInfiniteScroll);
-
     return () => {
       window.removeEventListener('scroll', handleInfiniteScroll);
     };
-  }, [handleInfiniteScroll, pages, pageNumber]);
+  }, []);
 
   return (
     <div>

@@ -110,7 +110,7 @@ const deleteCollege = asyncHandler(async (req, res) => {
 // @access  private(subscribed User, reviewer, admin)
 const getApprovedColleges = asyncHandler(async (req, res) => {
   const pageSize = 3;
-  const page = Number(req.query.pagenumber) || 1;
+  const page = Number(req.query.pageNumber) || 1;
 
   const options = req.query.keyword
     ? {

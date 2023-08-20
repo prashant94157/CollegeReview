@@ -325,10 +325,11 @@ const deleteUser = (userId) => async (dispatch, getState) => {
   }
 };
 
-const getUserList = (keyword, pagenumber) => async (dispatch, getState) => {
+const getUserList = (keyword, pageNumber) => async (dispatch, getState) => {
   try {
     dispatch({
       type: USER_LIST_REQUEST,
+      payload: { keyword: keyword },
     });
 
     const {
@@ -342,7 +343,7 @@ const getUserList = (keyword, pagenumber) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      `/api/v1/users?keyword=${keyword}&pagenumber=${pagenumber}`,
+      `/api/v1/users?keyword=${keyword}&pageNumber=${pageNumber}`,
       config
     );
 

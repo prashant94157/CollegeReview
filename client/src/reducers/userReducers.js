@@ -122,12 +122,22 @@ const userDeleteReducer = (state = { success: false }, { type, payload }) => {
 };
 
 const userListReducer = (
-  state = { users: [], success: false, search: '' },
+  state = { users: [], success: false, keyword: '', page: 0, pages: 100 },
   { type, payload }
 ) => {
   switch (type) {
     case USER_LIST_REQUEST:
-      return { ...state, loading: true };
+      if (state.keyword === payload.keyword)
+        return { ...state, loading: true, success: false };
+
+      return {
+        users: [],
+        loading: true,
+        keyword: payload.keyword,
+        success: false,
+        page: 0,
+        pages: 100,
+      };
 
     case USER_LIST_SUCCESS:
       return {
@@ -135,9 +145,8 @@ const userListReducer = (
         loading: false,
         page: payload.page,
         pages: payload.pages,
-        users: payload.users,
+        users: [...state.users, ...payload.users],
         success: true,
-        search: payload.search,
       };
 
     case USER_LIST_FAIL:
@@ -149,7 +158,7 @@ const userListReducer = (
       };
 
     case USER_LIST_RESET:
-      return { success: false, users: [], search: '' };
+      return { success: false, keyword: '', page: 0, pages: 100, users: [] };
 
     default:
       return state;
